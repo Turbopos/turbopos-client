@@ -14,7 +14,7 @@ const showPassword = ref(false);
 
 const validationSchema = toTypedSchema(
   object({
-    email: string().min(1, "Email harus diisi"),
+    username: string().min(1, "Username harus diisi"),
     password: string().min(1, "Password harus diisi"),
   }),
 );
@@ -22,7 +22,7 @@ const validationSchema = toTypedSchema(
 const { handleSubmit } = useForm({
   validationSchema,
   initialValues: {
-    email: "",
+    username: "",
     password: "",
   },
 });
@@ -52,10 +52,14 @@ const onSubmit = handleSubmit(async (values) => {
           </div>
         </div>
         <div class="space-y-5">
-          <FormGroup name="email" label="Email" v-slot="{ componentField }">
+          <FormGroup
+            name="username"
+            label="Username"
+            v-slot="{ componentField }"
+          >
             <Input
               v-bind="componentField"
-              placeholder="example@gmail.com"
+              placeholder="Masukkan username"
             ></Input>
           </FormGroup>
 

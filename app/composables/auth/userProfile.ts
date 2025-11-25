@@ -1,4 +1,4 @@
-import type { ProfileResponse } from "~/@types";
+import type { ProfileResponse } from "~/types";
 import { http } from "~/lib/http";
 
 export default function () {

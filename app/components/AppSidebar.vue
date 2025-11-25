@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import type { SidebarProps } from "@/components/ui/sidebar";
-import SearchForm from "@/components/SearchForm.vue";
-import VersionSwitcher from "@/components/VersionSwitcher.vue";
 import {
   Sidebar,
   SidebarContent,
@@ -25,16 +23,14 @@ import {
   Users,
   UserSearch,
 } from "lucide-vue-next";
-import type { NavMain } from "~/@types";
+import type { NavMain } from "~/types";
 
 const props = defineProps<SidebarProps>();
 
 // This is sample data.
 const data: {
-  versions: string[];
   navMain: NavMain[];
 } = {
-  versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
   navMain: [
     {
       title: "Beranda",
@@ -43,7 +39,6 @@ const data: {
         {
           title: "Dashboard",
           url: "/dashboard",
-          isActive: true,
           icon: User,
         },
       ],
@@ -134,18 +129,31 @@ const data: {
     },
   ],
 };
+
+const navMains = computed(() => {
+  return data.navMain.map((nav) => {
+    return {
+      ...nav,
+      items: nav.items?.map((item) => {
+        return {
+          ...item,
+          isActive: item.url === useRoute().fullPath,
+        };
+      }),
+    };
+  });
+});
 </script>
 
 <template>
   <Sidebar v-bind="props">
     <SidebarHeader>
-      <VersionSwitcher
-        :versions="data.versions"
-        :default-version="data.versions[0]!"
-      />
+      <div class="px-4 py-2">
+        <h2 class="text-lg font-semibold">TurboPOS</h2>
+      </div>
     </SidebarHeader>
     <SidebarContent>
-      <SidebarGroup v-for="item in data.navMain" :key="item.title">
+      <SidebarGroup v-for="item in navMains" :key="item.title">
         <SidebarGroupLabel>{{ item.title }}</SidebarGroupLabel>
         <SidebarGroupContent>
           <SidebarMenu>
@@ -153,7 +161,12 @@ const data: {
               v-for="childItem in item.items"
               :key="childItem.title"
             >
-              <SidebarMenuButton as-child :is-active="childItem.isActive">
+              <SidebarMenuButton
+                as-child
+                :class="{
+                  'bg-primary! text-white!': childItem.isActive,
+                }"
+              >
                 <NuxtLink :to="childItem.url" class="flex items-center gap-2">
                   <component
                     v-if="childItem.icon"

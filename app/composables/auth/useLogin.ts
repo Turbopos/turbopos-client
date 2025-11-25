@@ -1,4 +1,4 @@
-import type { LoginDto, LoginResponse } from "~/@types";
+import type { LoginDto, LoginResponse } from "~/types";
 import { http } from "~/lib/http";
 
 export default function useLogin() {
