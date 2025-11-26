@@ -14,6 +14,7 @@ export default function (props?: Props) {
 
   const { result, error, refresh, loading } = useQuery<DistributorsResponse>(
     (payload) => http().get("/distributor", { params: payload }),
+    payload.value,
   );
 
   watch(

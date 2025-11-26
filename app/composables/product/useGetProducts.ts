@@ -1,17 +1,24 @@
 import type { Distributor, ProductsRequest, ProductsResponse } from "~/types";
 import { http } from "~/lib/http";
 
-export default function () {
+interface Props {
+  distributor_id?: number;
+  limit?: number;
+}
+
+export default function (props?: Props) {
   const distributor = ref<Distributor>();
   const payload = ref<ProductsRequest>({
-    limit: 10,
+    limit: props?.limit || 10,
     search: "",
     page: 1,
-    jenis: "all" as any,
+    distributor_id: props?.distributor_id,
+    jenis: "" as any,
   });
 
   const { result, error, refresh, loading } = useQuery<ProductsResponse>(
     (payload) => http().get("/product", { params: payload }),
+    payload.value,
   );
 
   watch(distributor, () => {

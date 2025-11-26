@@ -50,18 +50,7 @@ const { result, error, loading } = useGetCustomer(id);
           </div>
         </CardContent>
       </Card>
-      <Card>
-        <CardHeader>
-          <div class="flex items-center justify-between">
-            <CardTitle>Kendaraan</CardTitle>
-            <Button type="button" size="sm">
-              <Car class="size-4"></Car>
-              Tambah Kendaraan
-            </Button>
-          </div>
-        </CardHeader>
-        <CardContent> </CardContent>
-      </Card>
+      <CustomerTransportList :customer-id="Number(id)" />
     </template>
     <div v-else-if="loading">Loading...</div>
     <div v-else-if="error">{{ error.message }}</div>
