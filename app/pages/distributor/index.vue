@@ -49,69 +49,72 @@ async function handleDelete(id: number) {
               <TableHead>Aksi</TableHead>
             </TableRow>
           </TableHeader>
-          <template v-if="loading">
-            <TableCaption>Loading...</TableCaption>
+          <template v-if="error">
+            <TableCaption>{{ error.message }}</TableCaption>
           </template>
-          <template v-else>
-            <template v-if="error">
-              <TableCaption>{{ error.message }}</TableCaption>
-            </template>
-            <template v-if="result?.distributors.length == 0">
-              <TableCaption class="py-20">
-                <NoResult message="Tidak ada distributor ditemukan"></NoResult>
-              </TableCaption>
-            </template>
-            <TableBody>
-              <TableRow
-                v-for="distributor in result?.distributors"
-                :key="distributor.id"
-              >
-                <TableCell>{{ distributor.nama }}</TableCell>
-                <TableCell>{{ distributor.alamat }}</TableCell>
-                <TableCell>{{ distributor.telepon }}</TableCell>
-                <TableCell>{{ distributor.whatsapp }}</TableCell>
-                <TableCell>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger>
-                      <MoreHorizontal class="size-4" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuItem as-child>
-                        <NuxtLink :to="`/distributor/${distributor.id}`"
-                          >Lihat Detail</NuxtLink
-                        >
-                      </DropdownMenuItem>
+          <template v-if="result?.distributors.length == 0">
+            <TableCaption class="py-20">
+              <NoResult message="Tidak ada distributor ditemukan"></NoResult>
+            </TableCaption>
+          </template>
+          <TableBody>
+            <TableRow
+              v-for="distributor in result?.distributors"
+              :key="distributor.id"
+            >
+              <TableCell>{{ distributor.nama }}</TableCell>
+              <TableCell>{{ distributor.alamat }}</TableCell>
+              <TableCell>{{ distributor.telepon }}</TableCell>
+              <TableCell>{{ distributor.whatsapp }}</TableCell>
+              <TableCell>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <MoreHorizontal class="size-4" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem as-child>
+                      <NuxtLink :to="`/distributor/${distributor.id}`"
+                        >Lihat Detail</NuxtLink
+                      >
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      v-if="authStore.user?.role === 'admin'"
+                      as-child
+                    >
+                      <NuxtLink :to="`/distributor/${distributor.id}/edit`"
+                        >Edit</NuxtLink
+                      >
+                    </DropdownMenuItem>
+                    <ConfirmDialog
+                      v-if="authStore.user?.role === 'admin'"
+                      title="Hapus Distributor"
+                      description="Anda yakin ingin menghapus distributor ini?"
+                      variant="destructive"
+                      :loading="deleteLoading"
+                      @confirm="handleDelete(distributor.id)"
+                    >
                       <DropdownMenuItem
-                        v-if="authStore.user?.role === 'admin'"
-                        as-child
+                        class="text-destructive"
+                        @select="(e: any) => e.preventDefault()"
                       >
-                        <NuxtLink :to="`/distributor/${distributor.id}/edit`"
-                          >Edit</NuxtLink
-                        >
+                        Hapus
                       </DropdownMenuItem>
-                      <ConfirmDialog
-                        v-if="authStore.user?.role === 'admin'"
-                        title="Hapus Distributor"
-                        description="Anda yakin ingin menghapus distributor ini?"
-                        variant="destructive"
-                        :loading="deleteLoading"
-                        @confirm="handleDelete(distributor.id)"
-                      >
-                        <DropdownMenuItem
-                          class="text-destructive"
-                          @select="(e: any) => e.preventDefault()"
-                        >
-                          Hapus
-                        </DropdownMenuItem>
-                      </ConfirmDialog>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </template>
+                    </ConfirmDialog>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </TableCell>
+            </TableRow>
+          </TableBody>
         </Table>
       </CardContent>
+      <CardFooter>
+        <TablePagination
+          v-model:page="payload.page"
+          :total="result?.total"
+          :limit="payload.limit"
+        >
+        </TablePagination>
+      </CardFooter>
     </Card>
   </div>
 </template>

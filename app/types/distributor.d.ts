@@ -12,6 +12,7 @@ export interface Distributor {
 export interface DistributorsRequest {
   search?: string;
   limit?: number;
+  page?: number;
 }
 
 export interface DistributorsResponse {

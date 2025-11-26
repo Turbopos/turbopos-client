@@ -6,3 +6,4 @@ export * from "./navigation.d.ts";
 export * from "./action.d.ts";
 export * from "./option.d.ts";
 export * from "./category.d.ts";
+export * from "./product.d.ts";

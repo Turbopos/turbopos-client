@@ -11,9 +11,15 @@ export default function () {
     (payload) => http().get("/user", { params: payload }),
   );
 
-  watch(payload, () => {
-    refresh(payload.value);
-  });
+  watch(
+    payload,
+    () => {
+      refresh(payload.value);
+    },
+    {
+      deep: true,
+    },
+  );
 
   return {
     result,

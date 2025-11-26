@@ -13,6 +13,7 @@ export interface Customer {
 export interface CustomersRequest {
   search?: string;
   limit?: number;
+  page?: number;
 }
 
 export interface CustomersResponse {

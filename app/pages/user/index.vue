@@ -53,55 +53,50 @@ async function handleDelete(id: number) {
               <TableHead>Aksi</TableHead>
             </TableRow>
           </TableHeader>
-          <template v-if="loading">
-            <TableCaption>Loading...</TableCaption>
+          <template v-if="error">
+            <TableCaption>{{ error.message }}</TableCaption>
           </template>
-          <template v-else>
-            <template v-if="error">
-              <TableCaption>{{ error.message }}</TableCaption>
-            </template>
-            <template v-if="result?.users.length == 0">
-              <TableCaption>
-                <NoResult message="Tidak ada karyawan ditemukan"></NoResult>
-              </TableCaption>
-            </template>
-            <TableBody>
-              <TableRow v-for="user in result?.users">
-                <TableCell>{{ user.nama }}</TableCell>
-                <TableCell>{{ user.username }}</TableCell>
-                <TableCell>
-                  <UserRoleBadge :role="user.role"></UserRoleBadge>
-                </TableCell>
-                <TableCell>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger>
-                      <MoreHorizontal class="size-4" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuItem as-child>
-                        <NuxtLink :to="`/user/${user.id}`">Edit</NuxtLink>
-                      </DropdownMenuItem>
-                      <ConfirmDialog
-                        v-if="user.id != auth.user?.id"
-                        title="Hapus User"
-                        description="Anda yakin ingin menghapus user ini?"
-                        variant="destructive"
-                        :loading="deleteLoading"
-                        @confirm="handleDelete(user.id)"
+          <template v-if="result?.users.length == 0">
+            <TableCaption class="py-20">
+              <NoResult message="Tidak ada karyawan ditemukan"></NoResult>
+            </TableCaption>
+          </template>
+          <TableBody>
+            <TableRow v-for="user in result?.users">
+              <TableCell>{{ user.nama }}</TableCell>
+              <TableCell>{{ user.username }}</TableCell>
+              <TableCell>
+                <UserRoleBadge :role="user.role"></UserRoleBadge>
+              </TableCell>
+              <TableCell>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <MoreHorizontal class="size-4" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem as-child>
+                      <NuxtLink :to="`/user/${user.id}`">Edit</NuxtLink>
+                    </DropdownMenuItem>
+                    <ConfirmDialog
+                      v-if="user.id != auth.user?.id"
+                      title="Hapus User"
+                      description="Anda yakin ingin menghapus user ini?"
+                      variant="destructive"
+                      :loading="deleteLoading"
+                      @confirm="handleDelete(user.id)"
+                    >
+                      <DropdownMenuItem
+                        class="text-destructive"
+                        @select="(e: any) => e.preventDefault()"
                       >
-                        <DropdownMenuItem
-                          class="text-destructive"
-                          @select="(e: any) => e.preventDefault()"
-                        >
-                          Hapus
-                        </DropdownMenuItem>
-                      </ConfirmDialog>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </template>
+                        Hapus
+                      </DropdownMenuItem>
+                    </ConfirmDialog>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </TableCell>
+            </TableRow>
+          </TableBody>
         </Table>
       </CardContent>
     </Card>

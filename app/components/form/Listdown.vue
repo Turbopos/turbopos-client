@@ -6,6 +6,7 @@ interface Props {
   items: OptionItem[];
   modelValue?: any;
   placeholder?: string;
+  withAll?: boolean;
 }
 
 const props = defineProps<Props>();
@@ -23,6 +24,7 @@ const placeholder = props.placeholder || "Pilih opsi";
       <SelectValue :placeholder="placeholder" class="w-full" />
     </SelectTrigger>
     <SelectContent>
+      <SelectItem v-if="withAll" value="all"> Semua </SelectItem>
       <SelectItem v-for="item in items" :key="item.value" :value="item.value">
         {{ item.label }}
       </SelectItem>
