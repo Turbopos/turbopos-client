@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Car, Edit } from "lucide-vue-next";
 import Heading from "~/components/main/Heading.vue";
 import useGetCustomer from "~/composables/customer/useGetCustomer";
 
@@ -10,36 +11,58 @@ const { result, error, loading } = useGetCustomer(id);
 <template>
   <div class="space-y-5">
     <Heading back title="Detail Customer"></Heading>
-    <Card v-if="!loading && result">
-      <CardHeader>
-        <CardTitle>{{ result.customer.nama }}</CardTitle>
-      </CardHeader>
-      <CardContent class="space-y-4">
-        <div>
-          <Label>Alamat</Label>
-          <p>{{ result.customer.alamat }}</p>
-        </div>
-        <div>
-          <Label>Telepon</Label>
-          <p>{{ result.customer.telepon }}</p>
-        </div>
-        <div v-if="result.customer.whatsapp">
-          <Label>WhatsApp</Label>
-          <p>{{ result.customer.whatsapp }}</p>
-        </div>
-        <div v-if="result.customer.keterangan">
-          <Label>Keterangan</Label>
-          <p>{{ result.customer.keterangan }}</p>
-        </div>
-        <div>
-          <Label>Transports</Label>
-          <p v-if="!result.customer.transports || result.customer.transports.length === 0">Tidak ada transport</p>
-          <ul v-else>
-            <li v-for="transport in result.customer.transports" :key="transport.id">{{ transport.nama }}</li>
-          </ul>
-        </div>
-      </CardContent>
-    </Card>
+    <template v-if="!loading && result">
+      <Card>
+        <CardHeader>
+          <div class="flex items-center justify-between">
+            <CardTitle>{{ result.customer.nama }}</CardTitle>
+            <Button type="button" as-child size="sm">
+              <NuxtLink
+                :to="`/customer/${id}/edit`"
+                class="flex items-center gap-3"
+              >
+                <Edit class="size-4"></Edit>
+                Edit Customer
+              </NuxtLink>
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent class="grid md:grid-cols-2 grid-cols-1 gap-4">
+          <div>
+            <Label class="text-muted-foreground">Nama</Label>
+            <p>{{ result.customer.nama }}</p>
+          </div>
+          <div>
+            <Label class="text-muted-foreground">Alamat</Label>
+            <p>{{ result.customer.alamat }}</p>
+          </div>
+          <div>
+            <Label class="text-muted-foreground">Telepon</Label>
+            <p>{{ result.customer.telepon }}</p>
+          </div>
+          <div v-if="result.customer.whatsapp">
+            <Label class="text-muted-foreground">WhatsApp</Label>
+            <p>{{ result.customer.whatsapp }}</p>
+          </div>
+          <div v-if="result.customer.keterangan">
+            <Label class="text-muted-foreground">Keterangan</Label>
+            <p>{{ result.customer.keterangan }}</p>
+          </div>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <div class="flex items-center justify-between">
+            <CardTitle>Kendaraan</CardTitle>
+            <Button type="button" size="sm">
+              <Car class="size-4"></Car>
+              Tambah Kendaraan
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent> </CardContent>
+      </Card>
+    </template>
     <div v-else-if="loading">Loading...</div>
     <div v-else-if="error">{{ error.message }}</div>
   </div>

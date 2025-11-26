@@ -72,11 +72,6 @@ async function handleDelete(id: number) {
                     <MoreHorizontal class="size-4" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
-                    <DropdownMenuItem as-child>
-                      <NuxtLink :to="`/distributor/${distributor.id}`"
-                        >Lihat Detail</NuxtLink
-                      >
-                    </DropdownMenuItem>
                     <DropdownMenuItem
                       v-if="authStore.user?.role === 'admin'"
                       as-child

@@ -1,7 +1,8 @@
-import type { ProductsRequest, ProductsResponse } from "~/types";
+import type { Distributor, ProductsRequest, ProductsResponse } from "~/types";
 import { http } from "~/lib/http";
 
 export default function () {
+  const distributor = ref<Distributor>();
   const payload = ref<ProductsRequest>({
     limit: 10,
     search: "",
@@ -12,6 +13,10 @@ export default function () {
   const { result, error, refresh, loading } = useQuery<ProductsResponse>(
     (payload) => http().get("/product", { params: payload }),
   );
+
+  watch(distributor, () => {
+    payload.value.distributor_id = distributor.value?.id || undefined;
+  });
 
   watch(
     payload,
@@ -37,5 +42,6 @@ export default function () {
     refresh,
     loading,
     payload,
+    distributor,
   };
 }

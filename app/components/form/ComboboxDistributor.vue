@@ -21,7 +21,7 @@ const open = ref(false);
 const value = useVModel(props, "modelValue", emits);
 
 function handleSelect(val: Distributor) {
-  value.value = val;
+  value.value = val.id == value.value?.id ? undefined : val;
   open.value = false;
 }
 </script>
@@ -41,7 +41,9 @@ function handleSelect(val: Distributor) {
     </PopoverTrigger>
     <PopoverContent class="w-full p-0">
       <Command class="w-full">
-        <CommandInput class="h-9 w-full" placeholder="Cari distributor..." />
+        <div class="relative">
+          <CommandInput class="h-9 w-full" placeholder="Cari distributor..." />
+        </div>
         <CommandList>
           <CommandEmpty v-if="loading">Memuat...</CommandEmpty>
           <template v-else>

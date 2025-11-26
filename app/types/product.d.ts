@@ -1,3 +1,4 @@
+import type { Category } from "./category";
 import type { Distributor } from "./distributor";
 
 export interface Product {
@@ -5,6 +6,7 @@ export interface Product {
   kode: string;
   jenis: "barang" | "jasa";
   category_id: number;
+  category?: Category;
   nama: string;
   barcode: string;
   distributor_id?: number;

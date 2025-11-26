@@ -8,18 +8,12 @@ import useGetCategories from "~/composables/category/useGetCategories";
 import useAuthStore from "~/stores/useAuthStore";
 import Listdown from "~/components/form/Listdown.vue";
 import { productTypeOptions } from "~/utils/constants";
+import ComboboxDistributor from "~/components/form/ComboboxDistributor.vue";
 
-const { result, loading, error, refresh, payload } = useGetProducts();
-const { result: categoriesResult } = useGetCategories();
+const { result, loading, error, refresh, payload, distributor } =
+  useGetProducts();
 const { execute: destroy, loading: deleteLoading } = useDeleteProduct();
 const authStore = useAuthStore();
-
-const getCategoryName = (categoryId: number) => {
-  return (
-    categoriesResult.value?.categories.find((cat) => cat.id === categoryId)
-      ?.nama || `Kategori ${categoryId}`
-  );
-};
 
 async function handleDelete(id: number) {
   await destroy(id);
@@ -45,6 +39,9 @@ async function handleDelete(id: number) {
     </Heading>
     <div class="flex gap-4">
       <Input placeholder="Cari..." class="flex-1" v-model="payload.search" />
+      <div class="w-48">
+        <ComboboxDistributor v-model="distributor" />
+      </div>
       <div class="w-48">
         <Listdown
           :items="productTypeOptions"
@@ -89,7 +86,7 @@ async function handleDelete(id: number) {
                 </Badge>
               </TableCell>
               <TableCell>{{ product.nama }}</TableCell>
-              <TableCell>{{ getCategoryName(product.category_id) }}</TableCell>
+              <TableCell>{{ product.category?.nama }}</TableCell>
               <TableCell
                 >Rp {{ product.harga_jual.toLocaleString() }}</TableCell
               >
@@ -105,11 +102,6 @@ async function handleDelete(id: number) {
                     <MoreHorizontal class="size-4" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
-                    <DropdownMenuItem as-child>
-                      <NuxtLink :to="`/product/${product.id}`"
-                        >Lihat Detail</NuxtLink
-                      >
-                    </DropdownMenuItem>
                     <DropdownMenuItem
                       v-if="authStore.user?.role === 'admin'"
                       as-child
