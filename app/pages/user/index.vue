@@ -40,9 +40,6 @@ async function handleDelete(id: number) {
       v-model="payload.search"
     />
     <Card>
-      <CardHeader>
-        <CardTitle> Data Karyawan </CardTitle>
-      </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
