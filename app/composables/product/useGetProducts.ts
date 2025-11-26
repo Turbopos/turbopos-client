@@ -13,17 +13,23 @@ export default function () {
     (payload) => http().get("/product", { params: payload }),
   );
 
-  watch(payload, (current, old) => {
-    if (current.page == old.page) {
-      current.page = 1;
-    }
+  watch(
+    payload,
+    (current, old) => {
+      if (current.page == old.page) {
+        current.page = 1;
+      }
 
-    if ((current.jenis as any) == "all") {
-      current.jenis = undefined;
-    }
+      if ((current.jenis as any) == "all") {
+        current.jenis = undefined;
+      }
 
-    refresh(current);
-  });
+      refresh(current);
+    },
+    {
+      deep: true,
+    },
+  );
 
   return {
     result,
