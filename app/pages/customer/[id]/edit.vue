@@ -22,6 +22,8 @@ async function onSubmit(values: CreateCustomerRequest) {
     id: Number(id),
     ...values,
   });
+
+  navigateTo(`/customer/${id}`);
 }
 </script>
 

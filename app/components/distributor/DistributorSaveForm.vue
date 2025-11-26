@@ -98,7 +98,11 @@ const onSubmit = handleSubmit((values) => {
         </FormGroup>
 
         <FormGroup name="alamat" label="Alamat" v-slot="{ componentField }">
-          <Input placeholder="Masukkan alamat" v-bind="componentField" />
+          <Textarea
+            rows="3"
+            placeholder="Masukkan alamat"
+            v-bind="componentField"
+          />
         </FormGroup>
 
         <FormGroup name="telepon" label="Telepon" v-slot="{ componentField }">

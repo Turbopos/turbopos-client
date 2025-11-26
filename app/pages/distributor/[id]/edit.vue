@@ -22,6 +22,8 @@ async function onSubmit(values: CreateDistributorRequest) {
     id: Number(id),
     ...values,
   });
+
+  navigateTo("/distributor");
 }
 </script>
 

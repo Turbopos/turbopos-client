@@ -18,6 +18,8 @@ async function onSubmit(values: CreateUserRequest) {
     id,
     ...values,
   });
+
+  navigateTo("/user");
 }
 </script>
 

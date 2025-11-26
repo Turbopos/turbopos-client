@@ -94,7 +94,11 @@ const onSubmit = handleSubmit((values) => {
         </FormGroup>
 
         <FormGroup name="alamat" label="Alamat" v-slot="{ componentField }">
-          <Input placeholder="Masukkan alamat" v-bind="componentField" />
+          <Textarea
+            rows="3"
+            placeholder="Masukkan alamat"
+            v-bind="componentField"
+          />
         </FormGroup>
 
         <FormGroup name="telepon" label="Telepon" v-slot="{ componentField }">
@@ -122,7 +126,11 @@ const onSubmit = handleSubmit((values) => {
           label="Keterangan"
           v-slot="{ componentField }"
         >
-          <Input placeholder="Masukkan keterangan" v-bind="componentField" />
+          <Textarea
+            placeholder="Masukkan keterangan"
+            rows="4"
+            v-bind="componentField"
+          />
         </FormGroup>
       </CardContent>
       <CardFooter class="flex items-center gap-2">
