@@ -9,6 +9,7 @@ import useAuthStore from "~/stores/useAuthStore";
 import Listdown from "~/components/form/Listdown.vue";
 import { productTypeOptions } from "~/utils/constants";
 import ComboboxDistributor from "~/components/form/ComboboxDistributor.vue";
+import { formatCurrency } from "~/lib/currency";
 
 const { result, loading, error, refresh, payload, distributor } =
   useGetProducts();
@@ -87,9 +88,7 @@ async function handleDelete(id: number) {
               </TableCell>
               <TableCell>{{ product.nama }}</TableCell>
               <TableCell>{{ product.category?.nama }}</TableCell>
-              <TableCell
-                >Rp {{ product.harga_jual.toLocaleString() }}</TableCell
-              >
+              <TableCell>{{ formatCurrency(product.harga_jual) }}</TableCell>
               <TableCell>
                 <template v-if="product.jenis == 'barang'">
                   {{ product.stok }} {{ product.satuan }}

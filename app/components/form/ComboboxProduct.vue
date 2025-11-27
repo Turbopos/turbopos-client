@@ -1,43 +1,50 @@
 <script setup lang="ts">
 import { CheckIcon, ChevronsUpDownIcon } from "lucide-vue-next";
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import useGetProducts from "~/composables/product/useGetProducts";
+import type { Product } from "~/types";
+import { useVModel } from "@vueuse/core";
 
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-];
+const props = defineProps<{
+  modelValue?: Product;
+  distributorId?: number;
+}>();
+
+const emits = defineEmits<{
+  "update:modelValue": [value: Product];
+}>();
+
+const { result, loading, refresh } = useGetProducts({
+  limit: 500,
+  distributor_id: props.distributorId,
+});
 
 const open = ref(false);
-const value = ref("");
+const value = useVModel(props, "modelValue", emits);
 
-const selectedFramework = computed(() =>
-  frameworks.find((framework) => framework.value === value.value),
-);
-
-function selectFramework(selectedValue: string) {
-  value.value = selectedValue === value.value ? "" : selectedValue;
+function handleSelect(val: Product) {
+  value.value = val.id == value.value?.id ? undefined : val;
   open.value = false;
 }
+
+const filteredProducts = computed(() => {
+  if (result.value?.products) {
+    return result.value!.products?.filter((p) => {
+      return p.distributor_id == props.distributorId;
+    });
+  }
+
+  return [];
+});
+
+watch(
+  () => props.distributorId,
+  () => {
+    refresh();
+  },
+);
 </script>
 
 <template>
@@ -47,34 +54,31 @@ function selectFramework(selectedValue: string) {
         variant="outline"
         role="combobox"
         :aria-expanded="open"
-        class="w-[200px] justify-between"
+        class="w-full justify-between"
+        :disabled="loading"
       >
-        {{ selectedFramework?.label || "Select framework..." }}
+        {{ value?.nama || "Pilih produk..." }}
         <ChevronsUpDownIcon class="opacity-50" />
       </Button>
     </PopoverTrigger>
-    <PopoverContent class="w-[200px] p-0">
+    <PopoverContent class="w-full p-0">
       <Command>
-        <CommandInput class="h-9" placeholder="Search framework..." />
+        <CommandInput class="h-9" placeholder="Cari produk..." />
         <CommandList>
-          <CommandEmpty>No framework found.</CommandEmpty>
-          <CommandGroup>
+          <CommandEmpty v-if="!loading">Produk tidak ditemukan.</CommandEmpty>
+          <CommandGroup v-if="!loading">
             <CommandItem
-              v-for="framework in frameworks"
-              :key="framework.value"
-              :value="framework.value"
-              @select="
-                (ev: any) => {
-                  selectFramework(ev.detail.value as string);
-                }
-              "
+              v-for="product in filteredProducts"
+              :key="product.id"
+              :value="product.nama"
+              @select="handleSelect(product)"
             >
-              {{ framework.label }}
+              {{ product.nama }}
               <CheckIcon
                 :class="
                   cn(
                     'ml-auto',
-                    value === framework.value ? 'opacity-100' : 'opacity-0',
+                    value?.id === product.id ? 'opacity-100' : 'opacity-0',
                   )
                 "
               />
