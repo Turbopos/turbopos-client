@@ -9,4 +9,5 @@ export * from "./category";
 export * from "./product";
 export * from "./customer-transport";
 export * from "./purchase-order";
+export * from "./sales-transaction";
 export * from "./step";
