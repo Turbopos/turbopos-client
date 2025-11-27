@@ -3,44 +3,44 @@ import { CheckIcon, ChevronsUpDownIcon } from "lucide-vue-next";
 import { ref } from "vue";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import useGetProducts from "~/composables/product/useGetProducts";
-import type { Product } from "~/types";
+import { useGetCustomerTransports } from "~/composables/customer-transport";
+import type { CustomerTransport } from "~/types";
 import { useVModel } from "@vueuse/core";
 
 const props = defineProps<{
-  modelValue?: Product;
-  distributorId?: number;
+  modelValue?: CustomerTransport;
+  customerId?: number;
 }>();
 
 const emits = defineEmits<{
-  "update:modelValue": [value: Product];
+  "update:modelValue": [value: CustomerTransport];
 }>();
 
-const { result, loading, refresh } = useGetProducts({
+const { result, loading, refresh } = useGetCustomerTransports({
   limit: 500,
-  distributor_id: props.distributorId,
+  customerId: props.customerId as number,
 });
 
 const open = ref(false);
 const value = useVModel(props, "modelValue", emits);
 
-function handleSelect(val: Product) {
+function handleSelect(val: CustomerTransport) {
   value.value = val.id == value.value?.id ? undefined : val;
   open.value = false;
 }
 
-const filteredProducts = computed(() => {
-  if (result.value?.products && props.distributorId) {
-    return result.value!.products?.filter((p) => {
-      return p.distributor_id == props.distributorId;
+const filteredTransports = computed(() => {
+  if (result.value?.transports && props.customerId) {
+    return result.value!.transports?.filter((t) => {
+      return t.customer_id == props.customerId;
     });
   }
 
-  return result.value!.products;
+  return result.value?.transports || [];
 });
 
 watch(
-  () => props.distributorId,
+  () => props.customerId,
   () => {
     refresh();
   },
@@ -57,28 +57,30 @@ watch(
         class="w-full justify-between"
         :disabled="loading"
       >
-        {{ value?.nama || "Pilih produk..." }}
+        {{ value?.nama || "Pilih kendaraan" }}
         <ChevronsUpDownIcon class="opacity-50" />
       </Button>
     </PopoverTrigger>
     <PopoverContent class="w-full p-0">
       <Command>
-        <CommandInput class="h-9" placeholder="Cari produk..." />
+        <CommandInput class="h-9" placeholder="Cari kendaraan..." />
         <CommandList>
-          <CommandEmpty v-if="!loading">Produk tidak ditemukan.</CommandEmpty>
+          <CommandEmpty v-if="!loading"
+            >Kendaraan tidak ditemukan.</CommandEmpty
+          >
           <CommandGroup v-if="!loading">
             <CommandItem
-              v-for="product in filteredProducts"
-              :key="product.id"
-              :value="product.nama"
-              @select="handleSelect(product)"
+              v-for="transport in filteredTransports"
+              :key="transport.id"
+              :value="transport.nama"
+              @select="handleSelect(transport)"
             >
-              {{ product.nama }}
+              {{ transport.nama }} - {{ transport.no_polisi }}
               <CheckIcon
                 :class="
                   cn(
                     'ml-auto',
-                    value?.id === product.id ? 'opacity-100' : 'opacity-0',
+                    value?.id === transport.id ? 'opacity-100' : 'opacity-0',
                   )
                 "
               />

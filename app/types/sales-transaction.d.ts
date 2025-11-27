@@ -19,6 +19,7 @@ export interface SalesTransaction {
   kode: string;
   customer_id: number;
   user_id: number;
+  transport_id?: number;
   ppn: number;
   subtotal: number;
   diskon: number;
@@ -27,13 +28,18 @@ export interface SalesTransaction {
   transaction_at: string;
   created_at: string;
   updated_at: string;
-  customer: {
+  customer?: {
     id: number;
     nama: string;
   };
   user: {
     id: number;
     nama: string;
+  };
+  transport?: {
+    id: number;
+    nama: string;
+    no_polisi: string;
   };
   details: SalesTransactionDetail[];
 }
@@ -67,7 +73,8 @@ export interface CreateSalesTransactionItem {
 }
 
 export interface CreateSalesTransactionRequest {
-  customer_id: number;
+  customer_id?: number;
+  transport_id?: number;
   ppn?: number;
   diskon?: number;
   transaction_at?: string;

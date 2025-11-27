@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Heading from "~/components/main/Heading.vue";
 import useGetProduct from "~/composables/product/useGetProduct";
+import { formatCurrency } from "~/lib/currency";
 
 const route = useRoute();
 const id = route.params.id;
@@ -19,8 +20,12 @@ const { result, error, loading } = useGetProduct(Number(id));
         <div>
           <Label>Jenis</Label>
           <p>
-            <Badge :variant="result.product.jenis === 'barang' ? 'default' : 'secondary'">
-              {{ result.product.jenis === 'barang' ? 'Barang' : 'Jasa' }}
+            <Badge
+              :variant="
+                result.product.jenis === 'barang' ? 'default' : 'secondary'
+              "
+            >
+              {{ result.product.jenis === "barang" ? "Barang" : "Jasa" }}
             </Badge>
           </p>
         </div>
@@ -28,13 +33,15 @@ const { result, error, loading } = useGetProduct(Number(id));
           <Label>Kategori ID</Label>
           <p>{{ result.product.category_id }}</p>
         </div>
-        <div v-if="result.product.jenis === 'barang' && result.product.harga_pokok">
+        <div
+          v-if="result.product.jenis === 'barang' && result.product.harga_pokok"
+        >
           <Label>Harga Pokok</Label>
-          <p>Rp {{ result.product.harga_pokok.toLocaleString() }}</p>
+          <p>{{ formatCurrency(result.product.harga_pokok) }}</p>
         </div>
         <div>
           <Label>Harga Jual</Label>
-          <p>Rp {{ result.product.harga_jual.toLocaleString() }}</p>
+          <p>{{ formatCurrency(result.product.harga_jual) }}</p>
         </div>
         <div v-if="result.product.jenis === 'barang'">
           <Label>Stok</Label>
