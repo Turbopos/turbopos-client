@@ -5,6 +5,7 @@ import useGetCategories from "~/composables/category/useGetCategories";
 interface Props {
   placeholder?: string;
   modelValue?: any;
+  withAll?: boolean;
 }
 
 const props = defineProps<Props>();
@@ -27,6 +28,7 @@ const { result: categoriesResult } = useGetCategories();
       />
     </SelectTrigger>
     <SelectContent>
+      <SelectItem v-if="withAll" :value="0"> Semua Kategori </SelectItem>
       <SelectItem
         v-for="category in categoriesResult?.categories"
         :key="category.id"

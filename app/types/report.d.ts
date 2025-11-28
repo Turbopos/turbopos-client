@@ -1,42 +1,50 @@
 export interface PurchaseOrderReportItem {
   nama_barang: string;
-  jml: number;
+  jumlah: number;
   satuan: string;
   harga_pokok: number;
   sub_total: number;
+  total: number;
 }
 
 export interface PurchaseOrderReportResponse {
-  report: PurchaseOrderReportItem[];
-  total_keseluruhan: number;
+  purchase_order_reports: PurchaseOrderReportItem[];
+  total: number;
+  per_page: number;
 }
 
 export interface PurchaseOrderReportRequest {
   month?: string;
   distributor_id?: number;
+  limit?: number;
+  page?: number;
 }
 
 export interface SalesTransactionReportItem {
   nama_barang: string;
-  jml: number;
+  jumlah: number;
   satuan: string;
   harga_jual: number;
   sub_total: number;
+  total: number;
 }
 
 export interface SalesTransactionReportResponse {
-  report: SalesTransactionReportItem[];
-  total_keseluruhan: number;
+  sales_transaction_reports: SalesTransactionReportItem[];
+  total: number;
+  per_page: number;
 }
 
 export interface SalesTransactionReportRequest {
   month?: string;
   category_id?: number;
+  limit?: number;
+  page?: number;
 }
 
 export interface ProfitLossItemReportItem {
   nama_barang: string;
-  jml: number;
+  jumlah: number;
   satuan: string;
   harga_beli: number;
   harga_jual: number;
@@ -44,12 +52,15 @@ export interface ProfitLossItemReportItem {
 }
 
 export interface ProfitLossItemReportResponse {
-  report: ProfitLossItemReportItem[];
-  total_keseluruhan: number;
+  profit_loss_items: ProfitLossItemReportItem[];
+  total: number;
+  per_page: number;
 }
 
 export interface ProfitLossItemReportRequest {
   month?: string;
+  limit?: number;
+  page?: number;
 }
 
 export interface ProfitLossCategoryReportItem {
@@ -58,26 +69,32 @@ export interface ProfitLossCategoryReportItem {
 }
 
 export interface ProfitLossCategoryReportResponse {
-  report: ProfitLossCategoryReportItem[];
-  total_keseluruhan: number;
+  profit_loss_categories: ProfitLossCategoryReportItem[];
+  total: number;
+  per_page: number;
 }
 
 export interface ProfitLossCategoryReportRequest {
   month?: string;
+  limit?: number;
+  page?: number;
 }
 
 export interface StockReportItem {
   nama_barang: string;
-  jml: number;
+  jumlah: number;
   satuan: string;
   stok: number;
 }
 
 export interface StockReportResponse {
-  report: StockReportItem[];
+  stock_reports: StockReportItem[];
+  total: number;
+  per_page: number;
 }
 
 export interface StockReportRequest {
   category_id?: number;
-  jenis?: string;
+  limit?: number;
+  page?: number;
 }

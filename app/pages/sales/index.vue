@@ -10,6 +10,7 @@ import { formatCurrency } from "~/lib/currency";
 import { formatDate } from "~/lib/date";
 import { transactionStatusOptions } from "~/utils/constants";
 import Listdown from "~/components/form/Listdown.vue";
+import DateRangeInput from "~/components/form/DateRangeInput.vue";
 
 const { result, loading, error, refresh, payload } = useGetSalesTransactions();
 const { execute: destroy, loading: deleteLoading } =
@@ -47,18 +48,12 @@ async function handleDelete(id: number) {
         placeholder="Semua Status"
         with-all
       />
-      <Input
-        type="date"
-        placeholder="Tanggal Dari"
-        :max="payload.transaction_at_to"
-        v-model="payload.transaction_at_from"
-      />
-      <Input
-        type="date"
-        placeholder="Tanggal Sampai"
-        :min="payload.transaction_at_from"
-        v-model="payload.transaction_at_to"
-      />
+      <div class="col-span-2">
+        <DateRangeInput
+          v-model:start-date="payload.transaction_at_from"
+          v-model:end-date="payload.transaction_at_to"
+        />
+      </div>
     </div>
 
     <Card>

@@ -101,7 +101,7 @@ const data: {
         },
         {
           title: "Laporan Penjualan",
-          url: "/sales-report",
+          url: "/sales-transaction-report",
           icon: BanknoteArrowUp,
         },
         {
@@ -137,7 +137,7 @@ const navMains = computed(() => {
       items: nav.items?.map((item) => {
         return {
           ...item,
-          isActive: item.url === useRoute().fullPath,
+          isActive: item.url === useRoute().path,
         };
       }),
     };

@@ -9,6 +9,7 @@ import {
 import { formatCurrency } from "~/lib/currency";
 import { formatDate } from "~/lib/date";
 import { transactionStatusOptions } from "~/utils/constants";
+import DateRangeInput from "~/components/form/DateRangeInput.vue";
 
 const { result, loading, error, refresh, payload } = useGetPurchaseOrders();
 const { execute: destroy, loading: deleteLoading } = useDeletePurchaseOrder();
@@ -37,24 +38,14 @@ async function handleDelete(id: number) {
       </template>
     </Heading>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      <Input
-        class="col-span-2"
-        placeholder="Cari..."
-        v-model="payload.search"
-      />
-      <Input
-        type="date"
-        placeholder="Tanggal Dari"
-        :max="payload.transaction_at_to"
-        v-model="payload.transaction_at_from"
-      />
-      <Input
-        type="date"
-        :min="payload.transaction_at_from"
-        placeholder="Tanggal Sampai"
-        v-model="payload.transaction_at_to"
-      />
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <Input placeholder="Cari..." v-model="payload.search" />
+      <div>
+        <DateRangeInput
+          v-model:start-date="payload.transaction_at_from"
+          v-model:end-date="payload.transaction_at_to"
+        />
+      </div>
     </div>
 
     <Card>

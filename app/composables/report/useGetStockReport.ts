@@ -2,7 +2,10 @@ import type { StockReportRequest, StockReportResponse } from "~/types";
 import { http } from "~/lib/http";
 
 export default function () {
-  const payload = ref<StockReportRequest>({});
+  const payload = ref<StockReportRequest>({
+    page: 1,
+    limit: 10,
+  });
 
   const { result, error, refresh, loading } = useQuery<StockReportResponse>(
     (payload) => http().get("/report/stock", { params: payload }),
@@ -12,8 +15,15 @@ export default function () {
     refresh(payload.value);
   });
 
+  const data = computed(() => result.value?.stock_reports || []);
+  const total = computed(() => result.value?.total || 0);
+  const perPage = computed(() => result.value?.per_page || 10);
+
   return {
-    result,
+    data,
+    total,
+    perPage,
+    payload,
     error,
     refresh,
     loading,
