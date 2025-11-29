@@ -1,4 +1,6 @@
 <script lang="ts">
+import "~/assets/css/tailwind.css";
+
 export const iframeHeight = "800px";
 export const description =
   "A simple sidebar with navigation grouped by section.";

@@ -4,15 +4,24 @@ import type {
 } from "~/types";
 import { http } from "~/lib/http";
 
-export default function () {
+interface Props {
+  limit?: number;
+  distributor_id?: number;
+  month?: string;
+}
+
+export default function (props?: Props) {
   const payload = ref<PurchaseOrderReportRequest>({
     page: 1,
-    limit: 10,
+    limit: props?.limit || 10,
+    month: props?.month,
+    distributor_id: props?.distributor_id,
   });
 
   const { result, error, refresh, loading } =
-    useQuery<PurchaseOrderReportResponse>((payload) =>
-      http().get("/report/purchase-order", { params: payload }),
+    useQuery<PurchaseOrderReportResponse>(
+      (payload) => http().get("/report/purchase-order", { params: payload }),
+      payload.value,
     );
 
   watch(payload, () => {

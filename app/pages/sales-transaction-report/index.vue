@@ -41,13 +41,21 @@ watch(currentPage, (newPage) => {
     page: newPage,
   };
 });
+
+function print() {
+  const queryString = new URLSearchParams({
+    category_id: selectedCategory.value?.toString() || "",
+    month: selectedMonth.value.toString() || "",
+  }).toString();
+  window.open("/sales-transaction-report/print?" + queryString, "_blank");
+}
 </script>
 
 <template>
   <div class="space-y-4">
     <Heading title="Laporan Penjualan Barang/Jasa">
       <template #actions>
-        <Button type="button">
+        <Button type="button" @click="print()">
           <Printer class="size-4" />
           Cetak Laporan
         </Button>

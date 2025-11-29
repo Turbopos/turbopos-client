@@ -14,6 +14,8 @@ import {
 import TablePagination from "~/components/TablePagination.vue";
 import { Card, CardContent, CardFooter } from "~/components/ui/card";
 import NoResult from "~/components/NoResult.vue";
+import { Printer } from "lucide-vue-next";
+import Button from "~/components/ui/button/Button.vue";
 
 const { data, total, perPage, payload } = useGetProfitLossCategoryReport();
 
@@ -35,13 +37,26 @@ watch(currentPage, (newPage) => {
     page: newPage,
   };
 });
+
+function print() {
+  const queryString = new URLSearchParams({
+    month: selectedMonth.value.toString() || "",
+  }).toString();
+  window.open("/profit-loss-category-report/print?" + queryString, "_blank");
+}
 </script>
 
 <template>
   <div class="space-y-4">
     <Card>
       <CardContent>
-        <MonthYearInput v-model="selectedMonth" />
+        <div class="flex justify-between items-center gap-3">
+          <MonthYearInput v-model="selectedMonth" />
+          <Button type="button" @click="print()">
+            <Printer class="size-4" />
+            Cetak Laporan
+          </Button>
+        </div>
       </CardContent>
       <CardContent>
         <Table>

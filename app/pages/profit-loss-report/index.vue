@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import Heading from "~/components/main/Heading.vue";
-import { Printer } from "lucide-vue-next";
-import Button from "~/components/ui/button/Button.vue";
 import type { OptionItem } from "~/types";
 import ProfitLossItemReport from "~/components/report/profit-loss/ProfitLossItemReport.vue";
 import ProfitLossCategoryReport from "~/components/report/profit-loss/ProfitLossCategoryReport.vue";
@@ -32,14 +30,7 @@ watch(tab, () => {
 
 <template>
   <div class="space-y-4">
-    <Heading title="Laporan Laba Rugi per Kategori">
-      <template #actions>
-        <Button type="button">
-          <Printer class="size-4" />
-          Cetak Laporan
-        </Button>
-      </template>
-    </Heading>
+    <Heading title="Laporan Laba Rugi" />
 
     <Tabs v-model="tab">
       <TabsList class="w-full grid grid-cols-2">

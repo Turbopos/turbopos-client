@@ -32,6 +32,14 @@ watch([selectedMonth, selectedDistributor], () => {
   currentPage.value = 1;
 });
 
+function print() {
+  const queryString = new URLSearchParams({
+    distributor_id: selectedDistributor.value?.id?.toString() || "",
+    month: selectedMonth.value.toString() || "",
+  }).toString();
+  window.open("/purchase-order-report/print?" + queryString, "_blank");
+}
+
 watch(currentPage, (newPage) => {
   payload.value = {
     ...payload.value,
@@ -44,7 +52,7 @@ watch(currentPage, (newPage) => {
   <div class="space-y-4">
     <Heading title="Laporan Pembelian Barang">
       <template #actions>
-        <Button type="button">
+        <Button type="button" @click="print()">
           <Printer class="size-4" />
           Cetak Laporan
         </Button>

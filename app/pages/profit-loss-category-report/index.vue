@@ -38,13 +38,20 @@ watch(currentPage, (newPage) => {
     page: newPage,
   };
 });
+
+function print() {
+  const queryString = new URLSearchParams({
+    month: selectedMonth.value.toString() || "",
+  }).toString();
+  window.open("/profit-loss-category-report/print?" + queryString, "_blank");
+}
 </script>
 
 <template>
   <div class="space-y-4">
     <Heading title="Laporan Laba Rugi per Kategori">
       <template #actions>
-        <Button type="button">
+        <Button type="button" @click="print()">
           <Printer class="size-4" />
           Cetak Laporan
         </Button>
