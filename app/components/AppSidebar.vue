@@ -168,6 +168,7 @@ const navMains = computed(() => {
             >
               <SidebarMenuButton
                 as-child
+                v-if="!childItem.hidden"
                 :class="{
                   'bg-primary! text-white!': childItem.isActive,
                 }"
