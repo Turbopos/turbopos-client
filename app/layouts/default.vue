@@ -1,5 +1,6 @@
 <script lang="ts">
 import "~/assets/css/tailwind.css";
+import ConfirmDialog from "~/components/dialog/ConfirmDialog.vue";
 
 export const iframeHeight = "800px";
 export const description =
@@ -22,9 +23,10 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { Home } from "lucide-vue-next";
+import { Home, Lock, User } from "lucide-vue-next";
 
 const main = useMainStore();
+const auth = useAuthStore();
 </script>
 
 <template>
@@ -60,6 +62,39 @@ const main = useMainStore();
             </template>
           </BreadcrumbList>
         </Breadcrumb>
+        <div class="ml-auto">
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Avatar>
+                <AvatarFallback>
+                  {{ auth.user?.username.slice(0, 2).toUpperCase() }}
+                </AvatarFallback>
+              </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem as-child>
+                <NuxtLink to="/profile" class="flex items-center gap-2">
+                  <User class="size-4"></User>
+                  Profil Saya
+                </NuxtLink>
+              </DropdownMenuItem>
+              <ConfirmDialog
+                title="Logout"
+                description="Anda yakin untuk keluar? Sesi anda akan terhapus"
+                @confirm="auth.logout"
+                variant="destructive"
+              >
+                <DropdownMenuItem
+                  class="text-destructive flex items-center gap-2"
+                  @select="(e: any) => e.preventDefault()"
+                >
+                  <Lock class="size-4"></Lock>
+                  Logout
+                </DropdownMenuItem>
+              </ConfirmDialog>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </header>
       <div class="flex flex-1 flex-col gap-4 p-4">
         <slot></slot>

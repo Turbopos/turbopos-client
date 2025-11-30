@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import LoginForm from "@/components/LoginForm.vue";
 
+const appName = useRuntimeConfig().public.APP_NAME;
+
+useSeoMeta({
+  title: `${appName} - Login`,
+  ogTitle: `${appName} - Login`,
+});
+
 definePageMeta({
   layout: "auth",
 });

@@ -11,6 +11,15 @@ export default defineStore("auth", () => {
     user.value = value;
   }
 
+  function logout() {
+    useCookie("token").value = null;
+    user.value = null;
+
+    useRouter().replace("/login");
+
+    return true;
+  }
+
   watch(result, () => {
     if (result.value) {
       user.value = result.value.profile;
@@ -21,5 +30,6 @@ export default defineStore("auth", () => {
     user,
     setUser,
     loading,
+    logout,
   };
 });
