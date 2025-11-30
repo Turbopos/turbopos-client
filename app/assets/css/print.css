@@ -40,8 +40,8 @@ style {
 
 table {
   width: 100%;
-  border: 1px solid black;
   border-collapse: collapse;
+  border-spacing: 0;
   display: table;
 }
 
@@ -60,11 +60,34 @@ table tbody {
 table th,
 table td {
   padding: 3px 8px;
-  border: 1px solid black;
   display: table-cell;
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+}
+
+table td:first-child,
+table th:first-child {
+  border-left: 1px solid #000;
+}
+
+table tr:first-child td,
+table tr:first-child th {
+  border-top: 1px solid #000;
+}
+
+table thead tr:last-child th,
+table thead tr:last-child td {
+  border-bottom: none;
+  border-bottom: none;
 }
 
 table th {
+  background-color: #cdcdcd;
   text-transform: uppercase;
   text-align: center;
+}
+
+table.no-border * {
+  border-style: none !important;
+  border-width: 0 !important;
 }

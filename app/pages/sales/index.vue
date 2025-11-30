@@ -125,6 +125,11 @@ async function handleDelete(id: number) {
                         </NuxtLink>
                       </DropdownMenuItem>
                       <DropdownMenuItem as-child>
+                        <NuxtLink :to="`/sales/${st.id}/print`" target="_blank">
+                          Cetak
+                        </NuxtLink>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem as-child v-if="st.status == 'pending'">
                         <NuxtLink :to="`/sales/${st.id}/edit`"> Edit </NuxtLink>
                       </DropdownMenuItem>
                       <ConfirmDialog

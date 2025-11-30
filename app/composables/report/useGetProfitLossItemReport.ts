@@ -1,15 +1,25 @@
-import type { ProfitLossItemReportRequest, ProfitLossItemReportResponse } from "~/types";
+import type {
+  ProfitLossItemReportRequest,
+  ProfitLossItemReportResponse,
+} from "~/types";
 import { http } from "~/lib/http";
 
-export default function () {
+interface Props {
+  limit?: number;
+  month?: string;
+}
+
+export default function (props?: Props) {
   const payload = ref<ProfitLossItemReportRequest>({
     page: 1,
-    limit: 10,
+    limit: props?.limit || 10,
+    month: props?.month,
   });
 
-  const { result, error, refresh, loading } = useQuery<ProfitLossItemReportResponse>(
-    (payload) => http().get("/report/profit-loss-item", { params: payload }),
-  );
+  const { result, error, refresh, loading } =
+    useQuery<ProfitLossItemReportResponse>((payload) =>
+      http().get("/report/profit-loss-item", { params: payload }),
+    );
 
   watch(payload, () => {
     refresh(payload.value);

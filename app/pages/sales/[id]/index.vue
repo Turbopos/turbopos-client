@@ -75,14 +75,6 @@ const { result, loading, error, refresh } = useGetSalesTransaction(id);
             </div>
             <div v-if="result.sales_transaction.transport">
               <Label class="text-sm font-medium text-muted-foreground"
-                >Transportasi</Label
-              >
-              <p class="text-lg font-semibold">
-                {{ result.sales_transaction.transport?.nama }}
-              </p>
-            </div>
-            <div v-if="result.sales_transaction.transport">
-              <Label class="text-sm font-medium text-muted-foreground"
                 >Kendaraan</Label
               >
               <p class="text-lg font-semibold">

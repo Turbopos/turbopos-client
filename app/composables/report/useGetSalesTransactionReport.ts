@@ -1,15 +1,27 @@
-import type { SalesTransactionReportRequest, SalesTransactionReportResponse } from "~/types";
+import type {
+  SalesTransactionReportRequest,
+  SalesTransactionReportResponse,
+} from "~/types";
 import { http } from "~/lib/http";
 
-export default function () {
+interface Props {
+  limit?: number;
+  month?: string;
+  category_id?: number;
+}
+
+export default function (props?: Props) {
   const payload = ref<SalesTransactionReportRequest>({
     page: 1,
-    limit: 10,
+    limit: props?.limit || 10,
+    month: props?.month,
+    category_id: props?.category_id,
   });
 
-  const { result, error, refresh, loading } = useQuery<SalesTransactionReportResponse>(
-    (payload) => http().get("/report/sales-transaction", { params: payload }),
-  );
+  const { result, error, refresh, loading } =
+    useQuery<SalesTransactionReportResponse>((payload) =>
+      http().get("/report/sales-transaction", { params: payload }),
+    );
 
   watch(payload, () => {
     refresh(payload.value);

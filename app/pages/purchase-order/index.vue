@@ -8,7 +8,6 @@ import {
 } from "~/composables/purchase-order";
 import { formatCurrency } from "~/lib/currency";
 import { formatDate } from "~/lib/date";
-import { transactionStatusOptions } from "~/utils/constants";
 import DateRangeInput from "~/components/form/DateRangeInput.vue";
 
 const { result, loading, error, refresh, payload } = useGetPurchaseOrders();
@@ -90,6 +89,14 @@ async function handleDelete(id: number) {
                       <DropdownMenuItem as-child>
                         <NuxtLink :to="`purchase-order/${po.id}`">
                           Lihat Detail
+                        </NuxtLink>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem as-child>
+                        <NuxtLink
+                          :to="`purchase-order/${po.id}/print`"
+                          target="_blank"
+                        >
+                          Cetak
                         </NuxtLink>
                       </DropdownMenuItem>
                       <ConfirmDialog

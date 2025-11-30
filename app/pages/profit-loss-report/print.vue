@@ -41,7 +41,9 @@ definePageMeta({
   <div class="a4" ref="element">
     <div class="title">
       Laporan Laba Rugi per Item
-      <div v-if="query.month">Bulan {{ moment(query.month + "-01").format("MMMM YYYY") }}</div>
+      <div v-if="query.month">
+        Bulan {{ moment(query.month + "-01").format("MMMM YYYY") }}
+      </div>
     </div>
 
     <table>
