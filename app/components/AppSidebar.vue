@@ -27,6 +27,7 @@ import type { NavMain } from "~/types";
 
 const props = defineProps<SidebarProps>();
 const config = useRuntimeConfig().public;
+const auth = useAuthStore();
 
 // This is sample data.
 const data: {
@@ -52,11 +53,13 @@ const data: {
           title: "Data Karyawan",
           icon: Users,
           url: "/user",
+          hidden: !auth.user?.is_admin,
         },
         {
           title: "Data Kategori",
           icon: ChartBarStacked,
           url: "/category",
+          hidden: !auth.user?.is_admin,
         },
         {
           title: "Data Barang & Jasa",
@@ -67,6 +70,7 @@ const data: {
           title: "Data Distributor",
           icon: Building,
           url: "/distributor",
+          hidden: !auth.user?.is_admin,
         },
         {
           title: "Data Customer",

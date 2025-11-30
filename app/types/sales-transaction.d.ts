@@ -1,3 +1,9 @@
+type SalesTransactionStatus =
+  | "pending"
+  | "in_progress"
+  | "completed"
+  | "cancelled";
+
 export interface SalesTransactionDetail {
   id: number;
   product_id: number;
@@ -24,7 +30,7 @@ export interface SalesTransaction {
   subtotal: number;
   diskon: number;
   total: number;
-  status: "pending" | "completed" | "cancelled";
+  status: SalesTransactionStatus;
   transaction_at: string;
   created_at: string;
   updated_at: string;
@@ -45,7 +51,7 @@ export interface SalesTransaction {
 }
 
 export interface SalesTransactionsRequest {
-  status?: "pending" | "completed" | "cancelled";
+  status?: SalesTransactionStatus;
   customer_id?: number;
   user_id?: number;
   search?: string;
@@ -88,5 +94,5 @@ export interface UpdateSalesTransactionRequest {
 }
 
 export interface UpdateSalesTransactionStatusRequest {
-  status: "pending" | "completed" | "cancelled";
+  status: SalesTransactionStatus;
 }

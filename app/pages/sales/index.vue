@@ -11,6 +11,7 @@ import { formatDate } from "~/lib/date";
 import { transactionStatusOptions } from "~/utils/constants";
 import Listdown from "~/components/form/Listdown.vue";
 import DateRangeInput from "~/components/form/DateRangeInput.vue";
+import SalesTransactionUpdateStatusDialog from "~/components/sales-transaction/SalesTransactionUpdateStatusDialog.vue";
 
 const { result, loading, error, refresh, payload } = useGetSalesTransactions();
 const { execute: destroy, loading: deleteLoading } =
@@ -101,23 +102,7 @@ async function handleDelete(id: number) {
                 <TableCell>{{ st.details.length }} Item</TableCell>
                 <TableCell>{{ formatCurrency(st.total) }}</TableCell>
                 <TableCell>
-                  <Badge
-                    :variant="
-                      st.status === 'completed'
-                        ? 'default'
-                        : st.status === 'cancelled'
-                          ? 'destructive'
-                          : 'secondary'
-                    "
-                  >
-                    {{
-                      st.status === "completed"
-                        ? "Selesai"
-                        : st.status === "cancelled"
-                          ? "Dibatalkan"
-                          : "Pending"
-                    }}
-                  </Badge>
+                  <SalesTransactionStatusBadge :status="st.status" />
                 </TableCell>
                 <TableCell>
                   <DropdownMenu>
@@ -135,6 +120,17 @@ async function handleDelete(id: number) {
                           Cetak
                         </NuxtLink>
                       </DropdownMenuItem>
+                      <SalesTransactionUpdateStatusDialog
+                        :sales="st"
+                        @update="() => refresh()"
+                      >
+                        <DropdownMenuItem
+                          @select="(e: any) => e.preventDefault()"
+                          v-if="!['completed', 'cancelled'].includes(st.status)"
+                        >
+                          Ganti Status
+                        </DropdownMenuItem>
+                      </SalesTransactionUpdateStatusDialog>
                       <DropdownMenuItem as-child v-if="st.status == 'pending'">
                         <NuxtLink :to="`/sales/${st.id}/edit`"> Edit </NuxtLink>
                       </DropdownMenuItem>

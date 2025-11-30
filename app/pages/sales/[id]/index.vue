@@ -45,9 +45,6 @@ const { result, loading, error, refresh } = useGetSalesTransaction(id);
     <!-- Error State -->
     <div v-else-if="error" class="text-center py-8">
       <p class="text-destructive">{{ error.message }}</p>
-      <Button @click="refresh" variant="outline" class="mt-4">
-        Coba Lagi
-      </Button>
     </div>
 
     <!-- Sales Transaction Details -->

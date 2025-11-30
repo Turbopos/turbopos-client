@@ -4,4 +4,5 @@ export interface NavMain {
   icon?: any;
   isActive?: boolean;
   items?: NavMain[];
+  hidden?: boolean;
 }

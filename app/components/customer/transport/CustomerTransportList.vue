@@ -37,7 +37,7 @@ const deleteTransport = async (id: number) => {
       <div class="flex items-center justify-between">
         <CardTitle>Kendaraan Customer</CardTitle>
         <SaveCustomerTransportDialog
-          @callback="refresh"
+          @callback="() => refresh()"
           :customer-id="customerId"
         >
           <Button type="button" size="sm">
@@ -80,7 +80,7 @@ const deleteTransport = async (id: number) => {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <SaveCustomerTransportDialog
-                  @callback="refresh"
+                  @callback="() => refresh()"
                   :customer-id="customerId"
                   is-edit
                   :transport="transport"

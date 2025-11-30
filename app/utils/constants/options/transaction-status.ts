@@ -1,5 +1,6 @@
 export const transactionStatusOptions = [
   { label: "Pending", value: "pending" },
-  { label: "Completed", value: "completed" },
-  { label: "Cancelled", value: "cancelled" },
+  { label: "Sedang dikerjakan", value: "in_progress" },
+  { label: "Selesai", value: "completed" },
+  { label: "Dibatalkan", value: "cancelled" },
 ];

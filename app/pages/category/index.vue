@@ -33,7 +33,7 @@ async function handleDelete(id: number) {
     ]"
   >
     <template #actions>
-      <SaveCategoryDialog @callback="refresh">
+      <SaveCategoryDialog @callback="() => refresh()">
         <Button type="button">
           <Plus class="size-4"></Plus>
           Tambah Kategori
@@ -72,7 +72,7 @@ async function handleDelete(id: number) {
                     <SaveCategoryDialog
                       is-edit
                       :category="category"
-                      @callback="refresh"
+                      @callback="() => refresh()"
                     >
                       <DropdownMenuItem
                         @select="(e: any) => e.preventDefault()"
