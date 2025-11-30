@@ -10,6 +10,7 @@ const props = defineProps<{
   class?: HTMLAttributes["class"];
 }>();
 
+const auth = useAuthStore();
 const showPassword = ref(false);
 
 const validationSchema = toTypedSchema(
@@ -33,6 +34,7 @@ const onSubmit = handleSubmit(async (values) => {
   await execute(values);
 
   if (!error.value) {
+    auth.setUser(result.value!.user);
     useCookie("token").value = result.value!.token;
     navigateTo("/dashboard");
   }
