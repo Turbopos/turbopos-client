@@ -10,10 +10,12 @@ import { useForm } from "vee-validate";
 
 const props = defineProps<{
   isEdit?: boolean;
+  isMe?: boolean;
   user?: User;
   loading?: boolean;
 }>();
 
+const auth = useAuthStore();
 const emits = defineEmits<{
   save: [value: CreateUserRequest];
 }>();
@@ -69,10 +71,13 @@ const onSubmit = handleSubmit((values) => {
       <CardContent class="space-y-4">
         <FormGroup
           name="nama"
-          label="Nama Karyawan"
+          :label="`Nama ${isMe ? 'Saya' : 'Karyawan'}`"
           v-slot="{ componentField }"
         >
-          <Input placeholder="Masukkan nama karyawan" v-bind="componentField" />
+          <Input
+            :placeholder="`Masukkan nama ${isMe ? 'saya' : 'karyawan'}`"
+            v-bind="componentField"
+          />
         </FormGroup>
 
         <FormGroup name="role" label="Role" v-slot="{ componentField }">
@@ -80,6 +85,7 @@ const onSubmit = handleSubmit((values) => {
             :items="userRoleOptions"
             v-bind="componentField"
             placeholder="Pilih role"
+            :disabled="user?.is_admin || !auth.user?.is_admin"
           ></Listdown>
         </FormGroup>
 
@@ -117,7 +123,7 @@ const onSubmit = handleSubmit((values) => {
         <Button type="submit">
           <Spinner class="size-4" v-if="loading"></Spinner>
           <Save v-else class="size-4"></Save>
-          Simpan Karyawan
+          Simpan {{ isMe ? "Profil" : "Karyawan" }}
         </Button>
       </CardFooter>
     </form>

@@ -7,6 +7,10 @@ export default defineStore("auth", () => {
 
   const { result, loading } = userProfile();
 
+  function setUser(value: User) {
+    user.value = value;
+  }
+
   watch(result, () => {
     if (result.value) {
       user.value = result.value.profile;
@@ -15,6 +19,7 @@ export default defineStore("auth", () => {
 
   return {
     user,
+    setUser,
     loading,
   };
 });
