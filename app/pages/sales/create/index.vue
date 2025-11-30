@@ -16,7 +16,20 @@ async function onSubmit(values: CreateSalesTransactionRequest) {
 </script>
 
 <template>
-  <Heading back title="Tambah Penjualan"></Heading>
+  <Heading
+    back
+    title="Tambah Penjualan"
+    :breadcrumbs="[
+      {
+        name: 'Transaksi Penjualan',
+        to: '/sales',
+      },
+      {
+        name: 'Tambah Penjualan',
+        to: '/sales/create',
+      },
+    ]"
+  ></Heading>
   <SalesTransactionCreateForm
     :loading="loading"
     @save="onSubmit"

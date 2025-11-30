@@ -22,7 +22,16 @@ async function handleDelete(id: number) {
 </script>
 
 <template>
-  <Heading title="Data Kategori" description="Mengelola data kategori">
+  <Heading
+    title="Data Kategori"
+    description="Mengelola data kategori"
+    :breadcrumbs="[
+      {
+        name: 'Data Kategori',
+        to: '/category',
+      },
+    ]"
+  >
     <template #actions>
       <SaveCategoryDialog @callback="refresh">
         <Button type="button">

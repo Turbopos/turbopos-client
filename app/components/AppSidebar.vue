@@ -26,6 +26,7 @@ import {
 import type { NavMain } from "~/types";
 
 const props = defineProps<SidebarProps>();
+const config = useRuntimeConfig().public;
 
 // This is sample data.
 const data: {
@@ -149,7 +150,7 @@ const navMains = computed(() => {
   <Sidebar v-bind="props">
     <SidebarHeader>
       <div class="px-4 py-2">
-        <h2 class="text-lg font-semibold">TurboPOS</h2>
+        <h2 class="text-lg font-semibold">{{ config.APP_NAME }}</h2>
       </div>
     </SidebarHeader>
     <SidebarContent>

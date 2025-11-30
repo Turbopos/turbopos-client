@@ -30,7 +30,15 @@ watch(tab, () => {
 
 <template>
   <div class="space-y-4">
-    <Heading title="Laporan Laba Rugi" />
+    <Heading
+      title="Laporan Laba Rugi"
+      :breadcrumbs="[
+        {
+          name: 'Laporan Laba Rugi',
+          to: '/profit-loss-report',
+        },
+      ]"
+    />
 
     <Tabs v-model="tab">
       <TabsList class="w-full grid grid-cols-2">

@@ -19,7 +19,16 @@ async function handleDelete(id: number) {
 
 <template>
   <div class="space-y-5">
-    <Heading title="Data Customer" description="Mengelola data customer">
+    <Heading
+      title="Data Customer"
+      description="Mengelola data customer"
+      :breadcrumbs="[
+        {
+          name: 'Data Customer',
+          to: '/customer',
+        },
+      ]"
+    >
       <template #actions>
         <Button type="button" as-child>
           <NuxtLink to="/customer/create" class="flex items-center gap-2">

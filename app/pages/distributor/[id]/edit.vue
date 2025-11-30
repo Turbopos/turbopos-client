@@ -28,7 +28,20 @@ async function onSubmit(values: CreateDistributorRequest) {
 </script>
 
 <template>
-  <Heading back title="Edit Distributor"></Heading>
+  <Heading
+    back
+    title="Edit Distributor"
+    :breadcrumbs="[
+      {
+        name: 'Data Distributor',
+        to: '/distributor',
+      },
+      {
+        name: 'Edit Distributor',
+        to: '/distributor',
+      },
+    ]"
+  ></Heading>
   <DistributorSaveForm
     is-edit
     :loading="loading"

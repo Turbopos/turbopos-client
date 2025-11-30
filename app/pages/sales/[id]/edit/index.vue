@@ -8,7 +8,11 @@ import type { UpdateSalesTransactionRequest } from "~/types";
 const route = useRoute();
 const id = Number(route.params.id);
 
-const { result, loading: fetchLoading, error: fetchError } = useGetSalesTransaction(id);
+const {
+  result,
+  loading: fetchLoading,
+  error: fetchError,
+} = useGetSalesTransaction(id);
 const { execute, loading, error } = useUpdateSalesTransaction(id);
 
 async function onSubmit(values: UpdateSalesTransactionRequest) {
@@ -21,7 +25,20 @@ async function onSubmit(values: UpdateSalesTransactionRequest) {
 </script>
 
 <template>
-  <Heading back :title="`Edit Transaksi Penjualan - ${result?.sales_transaction?.kode || ''}`"></Heading>
+  <Heading
+    back
+    :title="`Edit Transaksi Penjualan - ${result?.sales_transaction?.kode || ''}`"
+    :breadcrumbs="[
+      {
+        name: 'Transaksi Penjualan',
+        to: '/sales',
+      },
+      {
+        name: 'Edit Transaksi Penjualan',
+        to: '/sales',
+      },
+    ]"
+  ></Heading>
 
   <!-- Loading State -->
   <div v-if="fetchLoading" class="flex justify-center py-8">
@@ -31,9 +48,6 @@ async function onSubmit(values: UpdateSalesTransactionRequest) {
   <!-- Error State -->
   <div v-else-if="fetchError" class="text-center py-8">
     <p class="text-destructive">{{ fetchError.message }}</p>
-    <Button @click="refresh" variant="outline" class="mt-4">
-      Coba Lagi
-    </Button>
   </div>
 
   <!-- Edit Form -->
@@ -44,16 +58,16 @@ async function onSubmit(values: UpdateSalesTransactionRequest) {
       :loading="loading"
       @save="onSubmit"
     ></SalesTransactionCreateForm>
-    <span class="text-sm text-destructive" v-if="error">{{ error.message }}</span>
+    <span class="text-sm text-destructive" v-if="error">{{
+      error.message
+    }}</span>
   </div>
 
   <!-- Not Found State -->
   <div v-else class="text-center py-8">
     <p class="text-muted-foreground">Transaksi penjualan tidak ditemukan</p>
     <Button as-child variant="outline" class="mt-4">
-      <NuxtLink to="/sales">
-        Kembali ke List
-      </NuxtLink>
+      <NuxtLink to="/sales"> Kembali ke List </NuxtLink>
     </Button>
   </div>
 </template>

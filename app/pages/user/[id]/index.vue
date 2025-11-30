@@ -24,7 +24,20 @@ async function onSubmit(values: CreateUserRequest) {
 </script>
 
 <template>
-  <Heading back title="Edit Karyawan"></Heading>
+  <Heading
+    back
+    title="Edit Karyawan"
+    :breadcrumbs="[
+      {
+        name: 'Data Karyawan',
+        to: '/user',
+      },
+      {
+        name: 'Edit Karyawan',
+        to: '/user',
+      },
+    ]"
+  ></Heading>
   <KaryawanSaveForm
     is-edit
     :loading="loading"

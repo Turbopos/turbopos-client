@@ -53,7 +53,15 @@ function print() {
 
 <template>
   <div class="space-y-4">
-    <Heading title="Laporan Penjualan Barang/Jasa">
+    <Heading
+      title="Laporan Penjualan Barang & Jasa"
+      :breadcrumbs="[
+        {
+          name: 'Laporan Penjulan Barang & Jasa',
+          to: '/sales-transaction-report',
+        },
+      ]"
+    >
       <template #actions>
         <Button type="button" @click="print()">
           <Printer class="size-4" />

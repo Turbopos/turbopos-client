@@ -16,7 +16,20 @@ async function onSubmit(values: CreateProductRequest) {
 </script>
 
 <template>
-  <Heading back title="Tambah Barang/Jasa"></Heading>
+  <Heading
+    back
+    title="Tambah Barang/Jasa"
+    :breadcrumbs="[
+      {
+        name: 'Data Barang & Jasa',
+        to: '/product',
+      },
+      {
+        name: 'Tambah Barang/Jasa',
+        to: '/product/create',
+      },
+    ]"
+  ></Heading>
   <ProductSaveForm :loading="loading" @save="onSubmit"></ProductSaveForm>
   <span class="text-sm text-destructive" v-if="error">{{ error.message }}</span>
 </template>

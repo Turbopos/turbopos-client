@@ -19,7 +19,16 @@ async function handleDelete(id: number) {
 
 <template>
   <div class="space-y-5">
-    <Heading title="Data Distributor" description="Mengelola data distributor">
+    <Heading
+      title="Data Distributor"
+      description="Mengelola data distributor"
+      :breadcrumbs="[
+        {
+          name: 'Data Distributor',
+          to: '/distributor',
+        },
+      ]"
+    >
       <template #actions v-if="authStore.user?.is_admin">
         <Button type="button" as-child>
           <NuxtLink to="/distributor/create" class="flex items-center gap-2">

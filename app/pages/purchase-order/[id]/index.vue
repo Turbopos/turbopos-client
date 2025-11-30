@@ -13,7 +13,20 @@ const { result, loading, error, refresh } = useGetPurchaseOrder(id);
 
 <template>
   <div class="space-y-6">
-    <Heading back title="Detail Transaksi Pembelian" />
+    <Heading
+      back
+      title="Detail Transaksi Pembelian"
+      :breadcrumbs="[
+        {
+          name: 'Transaksi Pembelian',
+          to: '/purchase-order',
+        },
+        {
+          name: 'Detail Transaksi Belanjaan',
+          to: '/purchase-order',
+        },
+      ]"
+    />
 
     <!-- Loading State -->
     <div v-if="loading" class="flex justify-center py-8">

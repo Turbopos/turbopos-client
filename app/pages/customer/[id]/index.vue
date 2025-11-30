@@ -10,7 +10,20 @@ const { result, error, loading } = useGetCustomer(id);
 
 <template>
   <div class="space-y-5">
-    <Heading back title="Detail Customer"></Heading>
+    <Heading
+      back
+      title="Detail Customer"
+      :breadcrumbs="[
+        {
+          name: 'Data Customer',
+          to: '/customer',
+        },
+        {
+          name: 'Detail Customer',
+          to: '/customer',
+        },
+      ]"
+    ></Heading>
     <template v-if="!loading && result">
       <Card>
         <CardHeader>

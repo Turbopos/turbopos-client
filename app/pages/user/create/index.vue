@@ -15,7 +15,20 @@ async function onSubmit(values: CreateUserRequest) {
 </script>
 
 <template>
-  <Heading back title="Tambah Karyawan"></Heading>
+  <Heading
+    back
+    title="Tambah Karyawan"
+    :breadcrumbs="[
+      {
+        name: 'Data Karyawan',
+        to: '/user',
+      },
+      {
+        name: 'Tambah Karyawan',
+        to: '/create',
+      },
+    ]"
+  ></Heading>
   <KaryawanSaveForm :loading="loading" @save="onSubmit"></KaryawanSaveForm>
   <span class="text-sm text-destructive" v-if="error">{{ error.message }}</span>
 </template>

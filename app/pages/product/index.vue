@@ -26,8 +26,14 @@ async function handleDelete(id: number) {
 <template>
   <div class="space-y-5">
     <Heading
-      title="Data Barang/Jasa"
+      title="Data Barang & Jasa"
       description="Mengelola data produk barang dan layanan jasa yang disediakan"
+      :breadcrumbs="[
+        {
+          name: 'Data Barang & Jasa',
+          to: '/product',
+        },
+      ]"
     >
       <template #actions>
         <Button type="button" as-child>

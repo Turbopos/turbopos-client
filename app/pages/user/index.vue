@@ -24,6 +24,12 @@ async function handleDelete(id: number) {
     <Heading
       title="Data Karyawan"
       description="Mengelola data karyawan yang mendaftar"
+      :breadcrumbs="[
+        {
+          name: 'Data Karyawan',
+          to: '/user',
+        },
+      ]"
     >
       <template #actions>
         <Button type="button" as-child>

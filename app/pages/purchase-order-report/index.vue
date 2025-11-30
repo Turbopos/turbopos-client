@@ -50,7 +50,15 @@ watch(currentPage, (newPage) => {
 
 <template>
   <div class="space-y-4">
-    <Heading title="Laporan Pembelian Barang">
+    <Heading
+      title="Laporan Pembelian Barang"
+      :breadcrumbs="[
+        {
+          name: 'Laporan Pembelian Barang',
+          to: '/purchase-order-report',
+        },
+      ]"
+    >
       <template #actions>
         <Button type="button" @click="print()">
           <Printer class="size-4" />

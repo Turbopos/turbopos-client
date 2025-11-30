@@ -22,6 +22,9 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { Home } from "lucide-vue-next";
+
+const main = useMainStore();
 </script>
 
 <template>
@@ -37,14 +40,24 @@ import {
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem class="hidden md:block">
-              <BreadcrumbLink href="#">
-                Building Your Application
+              <BreadcrumbLink as-child>
+                <NuxtLink class="flex items-center gap-2" to="/dashboard">
+                  <Home class="size-4"></Home>
+                  Beranda
+                </NuxtLink>
               </BreadcrumbLink>
             </BreadcrumbItem>
-            <BreadcrumbSeparator class="hidden md:block" />
-            <BreadcrumbItem>
-              <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-            </BreadcrumbItem>
+            <template v-for="(breadcrumb, i) in main.breadcrumbs">
+              <BreadcrumbSeparator class="hidden md:block" />
+              <BreadcrumbItem>
+                <BreadcrumbLink as-child v-if="i < main.breadcrumbs.length - 1">
+                  <NuxtLink :to="breadcrumb.to">{{ breadcrumb.name }}</NuxtLink>
+                </BreadcrumbLink>
+                <BreadcrumbPage v-else>
+                  {{ breadcrumb.name }}
+                </BreadcrumbPage>
+              </BreadcrumbItem>
+            </template>
           </BreadcrumbList>
         </Breadcrumb>
       </header>

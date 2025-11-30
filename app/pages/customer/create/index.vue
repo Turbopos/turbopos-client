@@ -16,7 +16,20 @@ async function onSubmit(values: CreateCustomerRequest) {
 </script>
 
 <template>
-  <Heading back title="Tambah Customer"></Heading>
+  <Heading
+    back
+    title="Tambah Customer"
+    :breadcrumbs="[
+      {
+        name: 'Data Customer',
+        to: '/customer',
+      },
+      {
+        name: 'Tambah Customer',
+        to: '/customer/create',
+      },
+    ]"
+  ></Heading>
   <CustomerSaveForm :loading="loading" @save="onSubmit"></CustomerSaveForm>
   <span class="text-sm text-destructive" v-if="error">{{ error.message }}</span>
 </template>

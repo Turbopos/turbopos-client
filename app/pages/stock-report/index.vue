@@ -49,7 +49,15 @@ function print() {
 
 <template>
   <div class="space-y-4">
-    <Heading title="Laporan Stok Barang">
+    <Heading
+      title="Laporan Stok Barang"
+      :breadcrumbs="[
+        {
+          name: 'Laporan Stok Barang',
+          to: '/stock-report',
+        },
+      ]"
+    >
       <template #actions>
         <Button type="button" @click="print()">
           <Printer class="size-4" />

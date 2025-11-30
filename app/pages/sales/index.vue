@@ -29,6 +29,12 @@ async function handleDelete(id: number) {
     <Heading
       title="Transaksi Penjualan"
       description="Mengelola data transaksi penjualan"
+      :breadcrumbs="[
+        {
+          name: 'Transaksi Penjualan',
+          to: '/sales',
+        },
+      ]"
     >
       <template #actions>
         <Button type="button" as-child>

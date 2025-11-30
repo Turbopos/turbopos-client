@@ -13,7 +13,20 @@ const { result, loading, error, refresh } = useGetSalesTransaction(id);
 
 <template>
   <div class="space-y-6">
-    <Heading back title="Detail Transaksi Penjualan">
+    <Heading
+      back
+      title="Detail Transaksi Penjualan"
+      :breadcrumbs="[
+        {
+          name: 'Transaksi Penjualan',
+          to: '/sales',
+        },
+        {
+          name: 'Detail Transaksi Penjualan',
+          to: '/sales',
+        },
+      ]"
+    >
       <template #actions>
         <Button type="button" as-child>
           <NuxtLink :to="`/sales/${id}/edit`" class="flex items-center gap-2">

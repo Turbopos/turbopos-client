@@ -16,7 +16,23 @@ async function onSubmit(values: CreateDistributorRequest) {
 </script>
 
 <template>
-  <Heading back title="Tambah Distributor"></Heading>
-  <DistributorSaveForm :loading="loading" @save="onSubmit"></DistributorSaveForm>
+  <Heading
+    back
+    title="Tambah Distributor"
+    :breadcrumbs="[
+      {
+        name: 'Data Distributor',
+        to: '/distributor',
+      },
+      {
+        name: 'Tambah Distributor',
+        to: '/distributor/create',
+      },
+    ]"
+  ></Heading>
+  <DistributorSaveForm
+    :loading="loading"
+    @save="onSubmit"
+  ></DistributorSaveForm>
   <span class="text-sm text-destructive" v-if="error">{{ error.message }}</span>
 </template>

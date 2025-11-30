@@ -16,7 +16,20 @@ async function onSubmit(values: CreatePurchaseOrderRequest) {
 </script>
 
 <template>
-  <Heading back title="Tambah Belanjaan"></Heading>
+  <Heading
+    back
+    title="Tambah Belanjaan"
+    :breadcrumbs="[
+      {
+        name: 'Transaksi Pembelian',
+        to: '/purchase-order',
+      },
+      {
+        name: 'Tambah Belanjaan',
+        to: '/purchase-order/create',
+      },
+    ]"
+  ></Heading>
   <PurchaseOrderCreateForm
     :loading="loading"
     @save="onSubmit"

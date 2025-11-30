@@ -34,7 +34,20 @@ async function onSubmit(values: CreateProductRequest) {
 </script>
 
 <template>
-  <Heading back title="Edit Barang/Jasa"></Heading>
+  <Heading
+    back
+    title="Edit Barang/Jasa"
+    :breadcrumbs="[
+      {
+        name: 'Data Barang & Jasa',
+        to: '/product',
+      },
+      {
+        name: 'Edit Barang/Jasa',
+        to: '/product',
+      },
+    ]"
+  ></Heading>
   <ProductSaveForm
     is-edit
     :loading="loading"
