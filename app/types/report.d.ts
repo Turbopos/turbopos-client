@@ -98,3 +98,18 @@ export interface StockReportRequest {
   limit?: number;
   page?: number;
 }
+
+export interface DashboardSummaryData {
+  total_penjualan_hari_ini: number;
+  jumlah_transaksi_hari_ini: number;
+  produk_terlaris: {
+    nama: string;
+    total_jumlah: number;
+    satuan: string;
+  };
+  produk_stok_rendah: number;
+}
+
+export interface DashboardSummaryResponse {
+  data: DashboardSummaryData;
+}
