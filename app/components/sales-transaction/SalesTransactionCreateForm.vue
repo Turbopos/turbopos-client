@@ -121,6 +121,11 @@ const kembalian = computed(() => {
   return tunai.value - total.value;
 });
 
+const hasJasa = computed(() => {
+  const jasa = values.items?.filter((item: any) => item.jenis == "jasa") || [];
+  return jasa.length > 0 && subtotal.value > 0;
+});
+
 function addItem() {
   setValues({
     items: [...(values.items as any), { ...defaultItem }],
@@ -203,13 +208,6 @@ function confirmSalesTransaction() {
                   :customer-id="customer?.id"
                 />
               </FormGroup>
-              <FormGroup
-                v-if="customerTransport"
-                name="mekanik"
-                label="Pilih Mekanik"
-              >
-                <ComboboxUser v-model="mekanik" :role="Role.Mekanik" />
-              </FormGroup>
             </CardContent>
           </Card>
         </CardContent>
@@ -233,13 +231,6 @@ function confirmSalesTransaction() {
                   {{ customerTransport.no_polisi }}
                 </p>
               </div>
-              <FormGroup
-                v-if="customerTransport"
-                name="mekanik"
-                label="Pilih Mekanik"
-              >
-                <ComboboxUser v-model="mekanik" :role="Role.Mekanik" />
-              </FormGroup>
             </CardContent>
           </Card>
         </CardContent>
@@ -438,6 +429,10 @@ function confirmSalesTransaction() {
           <!--     </div> -->
           <!--   </div> -->
           <!-- </FormGroup> -->
+
+          <FormGroup name="mekanik" label="Pilih Mekanik">
+            <ComboboxUser v-model="mekanik" :role="Role.Mekanik" />
+          </FormGroup>
 
           <FormGroup name="total" label="Total">
             <Input disabled :model-value="formatCurrency(total)" />

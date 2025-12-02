@@ -37,7 +37,7 @@ function handleSelect(val: User) {
         :aria-expanded="open"
         class="w-full justify-between"
       >
-        {{ value?.nama || "Pilih Customer" }}
+        {{ value?.nama || "Pilih User" }}
         <ChevronsUpDownIcon class="opacity-50" />
       </Button>
     </PopoverTrigger>

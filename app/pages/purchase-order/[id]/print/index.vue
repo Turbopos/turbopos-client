@@ -46,7 +46,7 @@ definePageMeta({
 
 <template>
   <div class="a4" ref="element">
-    <div class="title">Pembelian Barang</div>
+    <div class="title">Nota Pembelian Barang</div>
 
     <div class="grid">
       <div>
