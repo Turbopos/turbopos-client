@@ -46,17 +46,17 @@ definePageMeta({
 
 <template>
   <div class="a4" ref="element">
-    <div class="title">
-      Pembelian Barang
-      <div>
-        Tanggal: {{ formatDate(result?.purchase_order.transaction_at) }}
-      </div>
-    </div>
+    <div class="title">Pembelian Barang</div>
 
     <div class="grid">
       <div>
         <table class="no-border">
           <tbody>
+            <tr>
+              <td>ID Transaksi</td>
+              <td>:</td>
+              <td>{{ result?.purchase_order.kode }}</td>
+            </tr>
             <tr>
               <td>Distributor</td>
               <td>:</td>
@@ -67,11 +67,6 @@ definePageMeta({
               <td>:</td>
               <td>{{ result?.purchase_order.user?.nama }}</td>
             </tr>
-            <tr>
-              <td>Tanggal</td>
-              <td>:</td>
-              <td>{{ formatDate(result?.purchase_order.transaction_at) }}</td>
-            </tr>
           </tbody>
         </table>
       </div>
@@ -80,24 +75,9 @@ definePageMeta({
         <table class="no-border">
           <tbody>
             <tr>
-              <td>Subtotal</td>
+              <td>Tanggal</td>
               <td>:</td>
-              <td>{{ formatCurrency(result?.purchase_order.subtotal) }}</td>
-            </tr>
-            <tr>
-              <td>PPN</td>
-              <td>:</td>
-              <td>{{ result?.purchase_order.ppn }}%</td>
-            </tr>
-            <tr>
-              <td>Diskon</td>
-              <td>:</td>
-              <td>{{ result?.purchase_order.diskon }}%</td>
-            </tr>
-            <tr>
-              <td>Total</td>
-              <td>:</td>
-              <td>{{ formatCurrency(result?.purchase_order.total) }}</td>
+              <td>{{ formatDate(result?.purchase_order.transaction_at) }}</td>
             </tr>
           </tbody>
         </table>
@@ -109,7 +89,7 @@ definePageMeta({
         <tr>
           <th>Nama Barang</th>
           <th>Harga Pokok</th>
-          <th>Kuantitas</th>
+          <th>Jml</th>
           <th>Sub Total</th>
         </tr>
       </thead>

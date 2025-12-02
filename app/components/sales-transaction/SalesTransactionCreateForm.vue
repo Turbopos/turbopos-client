@@ -35,6 +35,7 @@ const customerTransport = ref<CustomerTransport>();
 const mekanik = ref<User>();
 const diskon = ref(0);
 const ppn = ref(0);
+const tunai = ref(0);
 
 // Initialize values for edit mode
 if (props.isEdit && props.salesTransaction) {
@@ -43,6 +44,7 @@ if (props.isEdit && props.salesTransaction) {
   mekanik.value = props.salesTransaction.mekanik as any;
   diskon.value = props.salesTransaction.diskon;
   ppn.value = props.salesTransaction.ppn;
+  tunai.value = props.salesTransaction.tunai;
 }
 
 const defaultItem = {
@@ -115,6 +117,10 @@ const total = computed(() => {
   return subtotal.value + ppnValue - diskonValue;
 });
 
+const kembalian = computed(() => {
+  return tunai.value - total.value;
+});
+
 function addItem() {
   setValues({
     items: [...(values.items as any), { ...defaultItem }],
@@ -143,6 +149,7 @@ function confirmSalesTransaction() {
             diskon: item.diskon,
           };
         }) || [],
+      tunai: tunai.value,
     } as UpdateSalesTransactionRequest);
   } else {
     // For create mode, include all fields
@@ -161,6 +168,7 @@ function confirmSalesTransaction() {
             diskon: item.diskon,
           };
         }) || [],
+      tunai: tunai.value,
     } as CreateSalesTransactionRequest);
   }
 }
@@ -433,6 +441,14 @@ function confirmSalesTransaction() {
 
           <FormGroup name="total" label="Total">
             <Input disabled :model-value="formatCurrency(total)" />
+          </FormGroup>
+
+          <FormGroup name="tunai" label="Tunai">
+            <Input v-model="tunai" type="number" />
+          </FormGroup>
+
+          <FormGroup name="kembalian" label="Kembalian">
+            <Input disabled :model-value="formatCurrency(kembalian)" />
           </FormGroup>
         </CardContent>
         <CardFooter class="flex justify-end">

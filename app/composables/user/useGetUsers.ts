@@ -15,6 +15,7 @@ export default function (props?: Props) {
 
   const { result, error, refresh, loading } = useQuery<UsersResponse>(
     (payload) => http().get("/user", { params: payload }),
+    payload.value,
   );
 
   watch(

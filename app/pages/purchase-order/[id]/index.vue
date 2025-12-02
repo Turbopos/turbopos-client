@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ArrowLeft } from "lucide-vue-next";
+import { ArrowLeft, Printer } from "lucide-vue-next";
 import Heading from "~/components/main/Heading.vue";
 import { useGetPurchaseOrder } from "~/composables/purchase-order";
 import { formatCurrency } from "~/lib/currency";
@@ -26,7 +26,20 @@ const { result, loading, error, refresh } = useGetPurchaseOrder(id);
           to: '/purchase-order',
         },
       ]"
-    />
+    >
+      <template #actions>
+        <Button variant="outline" type="button" as-child>
+          <NuxtLink
+            :to="`purchase-order/${id}/print`"
+            target="_blank"
+            class="flex items-center gap-2"
+          >
+            <Printer class="size-4"></Printer>
+            Cetak
+          </NuxtLink>
+        </Button>
+      </template>
+    </Heading>
 
     <!-- Loading State -->
     <div v-if="loading" class="flex justify-center py-8">

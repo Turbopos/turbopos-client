@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ArrowLeft, Edit } from "lucide-vue-next";
+import { ArrowLeft, Edit, Printer } from "lucide-vue-next";
 import Heading from "~/components/main/Heading.vue";
 import { useGetSalesTransaction } from "~/composables/sales-transaction";
 import { formatCurrency } from "~/lib/currency";
@@ -28,12 +28,24 @@ const { result, loading, error, refresh } = useGetSalesTransaction(id);
       ]"
     >
       <template #actions>
-        <Button type="button" as-child>
-          <NuxtLink :to="`/sales/${id}/edit`" class="flex items-center gap-2">
-            <Edit class="size-4"></Edit>
-            Edit
-          </NuxtLink>
-        </Button>
+        <div class="flex items-center justify-end gap-3">
+          <Button type="button" variant="outline" as-child>
+            <NuxtLink
+              :to="`/sales/${id}/print`"
+              target="_blank"
+              class="flex items-center gap-2"
+            >
+              <Printer class="size-4"></Printer>
+              Cetak
+            </NuxtLink>
+          </Button>
+          <Button type="button" as-child>
+            <NuxtLink :to="`/sales/${id}/edit`" class="flex items-center gap-2">
+              <Edit class="size-4"></Edit>
+              Edit
+            </NuxtLink>
+          </Button>
+        </div>
       </template>
     </Heading>
 
@@ -90,6 +102,14 @@ const { result, loading, error, refresh } = useGetSalesTransaction(id);
               <p class="text-lg font-semibold">
                 {{ result.sales_transaction.transport.nama }} -
                 {{ result.sales_transaction.transport.no_polisi }}
+              </p>
+            </div>
+            <div v-if="result.sales_transaction.mekanik">
+              <Label class="text-sm font-medium text-muted-foreground"
+                >Mekanik</Label
+              >
+              <p class="text-lg font-semibold">
+                {{ result.sales_transaction.mekanik.nama }}
               </p>
             </div>
             <div>

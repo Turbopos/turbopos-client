@@ -49,6 +49,8 @@ export interface SalesTransaction {
     no_polisi: string;
   };
   details: SalesTransactionDetail[];
+  tunai: number;
+  kembalian: number;
 }
 
 export interface SalesTransactionsRequest {
@@ -87,6 +89,7 @@ export interface CreateSalesTransactionRequest {
   diskon?: number;
   transaction_at?: string;
   items: CreateSalesTransactionItem[];
+  tunai: number;
 }
 
 export interface UpdateSalesTransactionRequest {
@@ -94,6 +97,7 @@ export interface UpdateSalesTransactionRequest {
   diskon?: number;
   mekanik_id?: number;
   items: CreateSalesTransactionItem[];
+  tunai: number;
 }
 
 export interface UpdateSalesTransactionStatusRequest {

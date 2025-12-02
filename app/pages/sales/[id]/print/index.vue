@@ -46,17 +46,17 @@ definePageMeta({
 
 <template>
   <div class="a4" ref="element">
-    <div class="title">
-      Penjualan Barang
-      <div>
-        Tanggal: {{ formatDate(result?.sales_transaction.transaction_at) }}
-      </div>
-    </div>
+    <div class="title">Nota Penjualan</div>
 
     <div class="grid">
       <div>
         <table class="no-border">
           <tbody>
+            <tr>
+              <td>ID Transaksi</td>
+              <td>:</td>
+              <td>{{ result?.sales_transaction.kode }}</td>
+            </tr>
             <tr v-if="result?.sales_transaction.customer">
               <td>Customer</td>
               <td>:</td>
@@ -66,14 +66,28 @@ definePageMeta({
               <td>Kendaraan</td>
               <td>:</td>
               <td>
+                {{ result?.sales_transaction.transport?.nama }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div></div>
+      <div>
+        <table class="no-border">
+          <tbody>
+            <tr v-if="result?.sales_transaction.transport">
+              <td>Kendaraan</td>
+              <td>:</td>
+              <td>
                 {{ result?.sales_transaction.transport?.nama }} -
                 {{ result?.sales_transaction.transport?.no_polisi }}
               </td>
             </tr>
-            <tr>
-              <td>Petugas</td>
+            <tr v-if="result?.sales_transaction.mekanik">
+              <td>Mekanik</td>
               <td>:</td>
-              <td>{{ result?.sales_transaction.user?.nama }}</td>
+              <td>{{ result?.sales_transaction.mekanik?.nama }}</td>
             </tr>
             <tr>
               <td>Tanggal</td>
@@ -85,56 +99,37 @@ definePageMeta({
           </tbody>
         </table>
       </div>
-      <div></div>
-      <div>
-        <table class="no-border">
-          <tbody>
-            <tr>
-              <td>Subtotal</td>
-              <td>:</td>
-              <td>{{ formatCurrency(result?.sales_transaction.subtotal) }}</td>
-            </tr>
-            <tr>
-              <td>PPN</td>
-              <td>:</td>
-              <td>{{ result?.sales_transaction.ppn }}%</td>
-            </tr>
-            <tr>
-              <td>Diskon</td>
-              <td>:</td>
-              <td>{{ result?.sales_transaction.diskon }}%</td>
-            </tr>
-            <tr>
-              <td>Total</td>
-              <td>:</td>
-              <td>{{ formatCurrency(result?.sales_transaction.total) }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
     </div>
 
     <table>
       <thead>
         <tr>
           <th>Nama Barang</th>
-          <th>Harga Pokok</th>
-          <th>Harga Jual</th>
-          <th>Kuantitas</th>
+          <th>Harga</th>
+          <th>Jml</th>
+          <th>Diskon</th>
           <th>Sub Total</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in result?.sales_transaction.details" :key="item.id">
           <td>{{ item.product.nama }}</td>
-          <td>{{ formatCurrency(item.harga_pokok) }}</td>
           <td>{{ formatCurrency(item.harga_jual) }}</td>
           <td>{{ item.jumlah }}</td>
+          <td>{{ item.diskon }}%</td>
           <td>{{ formatCurrency(item.total) }}</td>
         </tr>
         <tr>
-          <td style="text-align: center" colspan="4">TOTAL</td>
+          <td style="text-align: right" colspan="4">TOTAL</td>
           <td>{{ formatCurrency(result?.sales_transaction.subtotal) }}</td>
+        </tr>
+        <tr>
+          <td style="text-align: right" colspan="4">TUNAI</td>
+          <td>{{ formatCurrency(result?.sales_transaction.tunai) }}</td>
+        </tr>
+        <tr>
+          <td style="text-align: right" colspan="4">KEMBALI</td>
+          <td>{{ formatCurrency(result?.sales_transaction.kembalian) }}</td>
         </tr>
       </tbody>
     </table>
