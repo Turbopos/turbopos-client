@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { salesTransactionCreateSteps } from "~/utils/constants";
+import { Role, salesTransactionCreateSteps } from "~/utils/constants";
 import Steppers from "../form/Steppers.vue";
 import ComboboxCustomer from "../form/ComboboxCustomer.vue";
 import ComboboxCustomerTransport from "../form/ComboboxCustomerTransport.vue";
@@ -9,13 +9,15 @@ import type {
   Customer,
   CustomerTransport,
   SalesTransaction,
+  User,
 } from "~/types";
 import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import { array, number, object, string } from "zod";
 import ComboboxProduct from "../form/ComboboxProduct.vue";
 import { Plus, ShoppingCart, Trash } from "lucide-vue-next";
-import { formatCurrency } from "~/lib/currency";
+import { calculateSubtotal, formatCurrency } from "~/lib/currency";
+import ComboboxUser from "../form/ComboboxUser.vue";
 
 const props = defineProps<{
   salesTransaction?: SalesTransaction;
@@ -30,6 +32,7 @@ const emits = defineEmits<{
 const currentStep = ref(1);
 const customer = ref<Customer>();
 const customerTransport = ref<CustomerTransport>();
+const mekanik = ref<User>();
 const diskon = ref(0);
 const ppn = ref(0);
 
@@ -37,6 +40,7 @@ const ppn = ref(0);
 if (props.isEdit && props.salesTransaction) {
   customer.value = props.salesTransaction.customer as any;
   customerTransport.value = props.salesTransaction.transport as any;
+  mekanik.value = props.salesTransaction.mekanik as any;
   diskon.value = props.salesTransaction.diskon;
   ppn.value = props.salesTransaction.ppn;
 }
@@ -81,7 +85,6 @@ const { values, setFieldValue, setValues, errors } = useForm({
               harga_jual: detail.harga_jual,
             },
             jumlah: detail.jumlah,
-            harga_jual: detail.harga_jual,
             ppn: detail.ppn,
             diskon: detail.diskon,
           })),
@@ -130,6 +133,7 @@ function confirmSalesTransaction() {
     emits("save", {
       diskon: diskon.value,
       ppn: ppn.value,
+      mekanik_id: mekanik.value?.id,
       items:
         values.items?.map((item) => {
           return {
@@ -147,6 +151,7 @@ function confirmSalesTransaction() {
       ppn: ppn.value,
       customer_id: customer.value?.id,
       transport_id: customerTransport.value?.id,
+      mekanik_id: mekanik.value?.id,
       items:
         values.items?.map((item) => {
           return {
@@ -190,6 +195,13 @@ function confirmSalesTransaction() {
                   :customer-id="customer?.id"
                 />
               </FormGroup>
+              <FormGroup
+                v-if="customerTransport"
+                name="mekanik"
+                label="Pilih Mekanik"
+              >
+                <ComboboxUser v-model="mekanik" :role="Role.Mekanik" />
+              </FormGroup>
             </CardContent>
           </Card>
         </CardContent>
@@ -213,6 +225,13 @@ function confirmSalesTransaction() {
                   {{ customerTransport.no_polisi }}
                 </p>
               </div>
+              <FormGroup
+                v-if="customerTransport"
+                name="mekanik"
+                label="Pilih Mekanik"
+              >
+                <ComboboxUser v-model="mekanik" :role="Role.Mekanik" />
+              </FormGroup>
             </CardContent>
           </Card>
         </CardContent>
@@ -275,6 +294,21 @@ function confirmSalesTransaction() {
                         />
                       </FormGroup>
                     </div>
+                    <div class="w-48">
+                      <FormGroup
+                        :name="`items[${i}].diskon`"
+                        v-slot="{ componentField }"
+                        label="Diskon"
+                      >
+                        <Input
+                          type="number"
+                          min="0"
+                          max="100"
+                          v-bind="componentField"
+                          placeholder="Diskon"
+                        />
+                      </FormGroup>
+                    </div>
                   </div>
 
                   <FormGroup :name="`items[${i}].subtotal`" label="Subtotal">
@@ -282,7 +316,11 @@ function confirmSalesTransaction() {
                       disabled
                       :model-value="
                         formatCurrency(
-                          (item.product.harga_jual || 0) * item.jumlah,
+                          calculateSubtotal({
+                            price: item.product?.harga_jual || 0,
+                            qty: item.jumlah,
+                            discount: item.diskon,
+                          }),
                         )
                       "
                     />
@@ -329,7 +367,8 @@ function confirmSalesTransaction() {
                     <TableHead>Produk</TableHead>
                     <TableHead>Harga</TableHead>
                     <TableHead>Jumlah</TableHead>
-                    <TableHead>Total</TableHead>
+                    <TableHead>Diskon</TableHead>
+                    <TableHead>Subtotal</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -339,9 +378,14 @@ function confirmSalesTransaction() {
                       formatCurrency(item.product?.harga_jual || 0)
                     }}</TableCell>
                     <TableCell>{{ item.jumlah }}</TableCell>
+                    <TableCell>{{ item.diskon }}%</TableCell>
                     <TableCell>{{
                       formatCurrency(
-                        (item.product?.harga_jual || 0) * item.jumlah,
+                        calculateSubtotal({
+                          price: item.product?.harga_jual || 0,
+                          qty: item.jumlah,
+                          discount: item.diskon || 0,
+                        }),
                       )
                     }}</TableCell>
                   </TableRow>
@@ -351,45 +395,41 @@ function confirmSalesTransaction() {
           </Card>
         </CardContent>
         <CardContent class="space-y-4">
-          <FormGroup name="subtotal" label="Subtotal">
-            <Input disabled :model-value="formatCurrency(subtotal)" />
-          </FormGroup>
-
-          <FormGroup name="ppn" label="PPN">
-            <div class="relative">
-              <Input
-                v-model="ppn"
-                class="pr-10"
-                type="number"
-                min="0"
-                max="100"
-              />
-
-              <div
-                class="absolute flex items-center justify-center top-0 bottom-0 right-0 p-3"
-              >
-                %
-              </div>
-            </div>
-          </FormGroup>
-
-          <FormGroup name="diskon" label="Diskon">
-            <div class="relative">
-              <Input
-                v-model="diskon"
-                class="pr-10"
-                type="number"
-                min="0"
-                max="100"
-              />
-
-              <div
-                class="absolute flex items-center justify-center top-0 bottom-0 right-0 p-3"
-              >
-                %
-              </div>
-            </div>
-          </FormGroup>
+          <!-- <FormGroup name="ppn" label="PPN"> -->
+          <!--   <div class="relative"> -->
+          <!--     <Input -->
+          <!--       v-model="ppn" -->
+          <!--       class="pr-10" -->
+          <!--       type="number" -->
+          <!--       min="0" -->
+          <!--       max="100" -->
+          <!--     /> -->
+          <!---->
+          <!--     <div -->
+          <!--       class="absolute flex items-center justify-center top-0 bottom-0 right-0 p-3" -->
+          <!--     > -->
+          <!--       % -->
+          <!--     </div> -->
+          <!--   </div> -->
+          <!-- </FormGroup> -->
+          <!---->
+          <!-- <FormGroup name="diskon" label="Diskon"> -->
+          <!--   <div class="relative"> -->
+          <!--     <Input -->
+          <!--       v-model="diskon" -->
+          <!--       class="pr-10" -->
+          <!--       type="number" -->
+          <!--       min="0" -->
+          <!--       max="100" -->
+          <!--     /> -->
+          <!---->
+          <!--     <div -->
+          <!--       class="absolute flex items-center justify-center top-0 bottom-0 right-0 p-3" -->
+          <!--     > -->
+          <!--       % -->
+          <!--     </div> -->
+          <!--   </div> -->
+          <!-- </FormGroup> -->
 
           <FormGroup name="total" label="Total">
             <Input disabled :model-value="formatCurrency(total)" />

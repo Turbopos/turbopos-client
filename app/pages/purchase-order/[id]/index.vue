@@ -81,14 +81,6 @@ const { result, loading, error, refresh } = useGetPurchaseOrder(id);
                 {{ formatCurrency(result.purchase_order.subtotal) }}
               </p>
             </div>
-            <div>
-              <Label class="text-sm font-medium text-muted-foreground"
-                >Diskon</Label
-              >
-              <p class="text-lg font-semibold">
-                {{ result.purchase_order.diskon }} %
-              </p>
-            </div>
             <div class="md:col-span-2 lg:col-span-3">
               <Label class="text-sm font-medium text-muted-foreground"
                 >Total</Label

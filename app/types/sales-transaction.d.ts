@@ -1,3 +1,5 @@
+import type { User } from "./user";
+
 type SalesTransactionStatus =
   | "pending"
   | "in_progress"
@@ -17,6 +19,7 @@ export interface SalesTransactionDetail {
   product: {
     id: number;
     nama: string;
+    diskon?: number;
   };
 }
 
@@ -38,10 +41,8 @@ export interface SalesTransaction {
     id: number;
     nama: string;
   };
-  user: {
-    id: number;
-    nama: string;
-  };
+  user: User;
+  mekanik?: User;
   transport?: {
     id: number;
     nama: string;
@@ -81,6 +82,7 @@ export interface CreateSalesTransactionItem {
 export interface CreateSalesTransactionRequest {
   customer_id?: number;
   transport_id?: number;
+  mekanik_id?: number;
   ppn?: number;
   diskon?: number;
   transaction_at?: string;
@@ -90,6 +92,7 @@ export interface CreateSalesTransactionRequest {
 export interface UpdateSalesTransactionRequest {
   ppn?: number;
   diskon?: number;
+  mekanik_id?: number;
   items: CreateSalesTransactionItem[];
 }
 

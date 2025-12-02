@@ -283,27 +283,27 @@ watch(distributor, resetItems);
         </Card>
       </CardContent>
       <CardContent class="space-y-4">
-        <FormGroup name="subtotal" label="Subtotal">
-          <Input disabled :model-value="formatCurrency(subtotal)" />
-        </FormGroup>
-
-        <FormGroup name="diskon" label="Diskon">
-          <div class="relative">
-            <Input
-              v-model="diskon"
-              class="pr-10"
-              type="number"
-              min="0"
-              max="100"
-            />
-
-            <div
-              class="absolute flex items-center justify-center top-0 bottom-0 right-0 p-3"
-            >
-              %
-            </div>
-          </div>
-        </FormGroup>
+        <!-- <FormGroup name="subtotal" label="Subtotal"> -->
+        <!--   <Input disabled :model-value="formatCurrency(subtotal)" /> -->
+        <!-- </FormGroup> -->
+        <!---->
+        <!-- <FormGroup name="diskon" label="Diskon"> -->
+        <!--   <div class="relative"> -->
+        <!--     <Input -->
+        <!--       v-model="diskon" -->
+        <!--       class="pr-10" -->
+        <!--       type="number" -->
+        <!--       min="0" -->
+        <!--       max="100" -->
+        <!--     /> -->
+        <!---->
+        <!--     <div -->
+        <!--       class="absolute flex items-center justify-center top-0 bottom-0 right-0 p-3" -->
+        <!--     > -->
+        <!--       % -->
+        <!--     </div> -->
+        <!--   </div> -->
+        <!-- </FormGroup> -->
 
         <FormGroup name="total" label="Total">
           <Input disabled :model-value="formatCurrency(total)" />

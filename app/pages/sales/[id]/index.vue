@@ -116,22 +116,6 @@ const { result, loading, error, refresh } = useGetSalesTransaction(id);
                 {{ formatCurrency(result.sales_transaction.subtotal) }}
               </p>
             </div>
-            <div>
-              <Label class="text-sm font-medium text-muted-foreground"
-                >PPN</Label
-              >
-              <p class="text-lg font-semibold">
-                {{ result.sales_transaction.ppn }} %
-              </p>
-            </div>
-            <div>
-              <Label class="text-sm font-medium text-muted-foreground"
-                >Diskon</Label
-              >
-              <p class="text-lg font-semibold">
-                {{ result.sales_transaction.diskon }} %
-              </p>
-            </div>
             <div class="md:col-span-2 lg:col-span-3">
               <Label class="text-sm font-medium text-muted-foreground"
                 >Total</Label
@@ -167,7 +151,8 @@ const { result, loading, error, refresh } = useGetSalesTransaction(id);
                 <TableHead class="text-right">Harga Pokok</TableHead>
                 <TableHead class="text-right">Harga Jual</TableHead>
                 <TableHead class="text-right">Jumlah</TableHead>
-                <TableHead class="text-right">Total</TableHead>
+                <TableHead class="text-right">Diskon</TableHead>
+                <TableHead class="text-right">Subtotal</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -185,6 +170,7 @@ const { result, loading, error, refresh } = useGetSalesTransaction(id);
                   {{ formatCurrency(item.harga_jual) }}
                 </TableCell>
                 <TableCell class="text-right">{{ item.jumlah }}</TableCell>
+                <TableCell class="text-right">{{ item.diskon }}%</TableCell>
                 <TableCell class="text-right font-semibold">
                   {{ formatCurrency(item.total) }}
                 </TableCell>
@@ -192,7 +178,7 @@ const { result, loading, error, refresh } = useGetSalesTransaction(id);
             </TableBody>
             <TableFooter>
               <TableRow>
-                <TableCell colspan="4" class="text-right font-semibold">
+                <TableCell colspan="5" class="text-right font-semibold">
                   Total
                 </TableCell>
                 <TableCell class="text-right font-bold text-primary">

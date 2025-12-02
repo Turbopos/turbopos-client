@@ -1,9 +1,15 @@
 import type { UsersRequest, UsersResponse } from "~/types";
 import { http } from "~/lib/http";
+import type { Role } from "~/utils/constants";
 
-export default function () {
+interface Props {
+  limit?: number;
+  role?: Role;
+}
+
+export default function (props?: Props) {
   const payload = ref<UsersRequest>({
-    role: null,
+    role: props?.role,
     search: "",
   });
 

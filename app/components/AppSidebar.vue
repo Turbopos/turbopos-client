@@ -89,7 +89,7 @@ const data: {
           icon: ArrowLeftRight,
         },
         {
-          title: "Transaksi Penjualan Servis",
+          title: "Transaksi Penjualan & Servis",
           url: "/sales",
           icon: BanknoteArrowUp,
         },
