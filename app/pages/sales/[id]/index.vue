@@ -39,7 +39,11 @@ const { result, loading, error, refresh } = useGetSalesTransaction(id);
               Cetak
             </NuxtLink>
           </Button>
-          <Button type="button" as-child>
+          <Button
+            type="button"
+            as-child
+            v-if="result?.sales_transaction.status != 'completed'"
+          >
             <NuxtLink :to="`/sales/${id}/edit`" class="flex items-center gap-2">
               <Edit class="size-4"></Edit>
               Edit
