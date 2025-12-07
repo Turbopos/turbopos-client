@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import "~/assets/css/print.css";
+import "~/assets/css/print.scss";
 import { useGetSalesTransaction } from "~/composables/sales-transaction";
 import { formatCurrency } from "~/lib/currency";
 import { formatDate } from "~/lib/date";
@@ -45,7 +45,7 @@ definePageMeta({
 </style>
 
 <template>
-  <div class="a4" ref="element">
+  <div class="print-element a4" ref="element">
     <div class="title">Nota Penjualan</div>
 
     <div class="grid">
@@ -114,22 +114,28 @@ definePageMeta({
       <tbody>
         <tr v-for="item in result?.sales_transaction.details" :key="item.id">
           <td>{{ item.product.nama }}</td>
-          <td>{{ formatCurrency(item.harga_jual) }}</td>
-          <td>{{ item.jumlah }}</td>
-          <td>{{ item.diskon }}%</td>
-          <td>{{ formatCurrency(item.total) }}</td>
+          <td align="right">{{ formatCurrency(item.harga_jual) }}</td>
+          <td align="right">{{ item.jumlah }}</td>
+          <td align="right">{{ item.diskon }}%</td>
+          <td align="right">{{ formatCurrency(item.total) }}</td>
         </tr>
         <tr>
           <td style="text-align: right" colspan="4">TOTAL</td>
-          <td>{{ formatCurrency(result?.sales_transaction.subtotal) }}</td>
+          <td align="right">
+            {{ formatCurrency(result?.sales_transaction.subtotal) }}
+          </td>
         </tr>
         <tr>
           <td style="text-align: right" colspan="4">TUNAI</td>
-          <td>{{ formatCurrency(result?.sales_transaction.tunai) }}</td>
+          <td align="right">
+            {{ formatCurrency(result?.sales_transaction.tunai) }}
+          </td>
         </tr>
         <tr>
           <td style="text-align: right" colspan="4">KEMBALI</td>
-          <td>{{ formatCurrency(result?.sales_transaction.kembalian) }}</td>
+          <td align="right">
+            {{ formatCurrency(result?.sales_transaction.kembalian) }}
+          </td>
         </tr>
       </tbody>
     </table>

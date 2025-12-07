@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import "~/assets/css/print.css";
+import "~/assets/css/print.scss";
 import { useGetPurchaseOrder } from "~/composables/purchase-order";
 import { formatCurrency } from "~/lib/currency";
 import { formatDate } from "~/lib/date";
@@ -45,7 +45,7 @@ definePageMeta({
 </style>
 
 <template>
-  <div class="a4" ref="element">
+  <div class="print-element a4" ref="element">
     <div class="title">Nota Pembelian Barang</div>
 
     <div class="grid">
@@ -96,13 +96,15 @@ definePageMeta({
       <tbody>
         <tr v-for="item in result?.purchase_order.details" :key="item.id">
           <td>{{ item.product.nama }}</td>
-          <td>{{ formatCurrency(item.harga_pokok) }}</td>
-          <td>{{ item.jumlah }}</td>
-          <td>{{ formatCurrency(item.subtotal) }}</td>
+          <td align="right">{{ formatCurrency(item.harga_pokok) }}</td>
+          <td align="right">{{ item.jumlah }}</td>
+          <td align="right">{{ formatCurrency(item.subtotal) }}</td>
         </tr>
         <tr>
           <td style="text-align: center" colspan="3">TOTAL</td>
-          <td>{{ formatCurrency(result?.purchase_order.subtotal) }}</td>
+          <td align="right">
+            {{ formatCurrency(result?.purchase_order.subtotal) }}
+          </td>
         </tr>
       </tbody>
     </table>

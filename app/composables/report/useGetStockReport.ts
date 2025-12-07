@@ -1,10 +1,14 @@
 import type { StockReportRequest, StockReportResponse } from "~/types";
 import { http } from "~/lib/http";
 
-export default function () {
+interface Props {
+  limit?: number;
+}
+
+export default function (props?: Props) {
   const payload = ref<StockReportRequest>({
     page: 1,
-    limit: 10,
+    limit: props?.limit || 10,
   });
 
   const { result, error, refresh, loading } = useQuery<StockReportResponse>(

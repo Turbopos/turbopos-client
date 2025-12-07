@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import moment from "moment";
-import "~/assets/css/print.css";
+import "~/assets/css/print.scss";
 
 import useGetSalesTransactionReport from "~/composables/report/useGetSalesTransactionReport";
 import { formatCurrency } from "~/lib/currency";
@@ -38,10 +38,12 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="a4" ref="element">
+  <div class="print-element a4" ref="element">
     <div class="title">
       Laporan Penjualan Barang/Jasa
-      <div v-if="query.month">Bulan {{ moment(query.month + "-01").format("MMMM YYYY") }}</div>
+      <div v-if="query.month">
+        Bulan {{ moment(query.month + "-01").format("MMMM YYYY") }}
+      </div>
     </div>
 
     <table>
@@ -57,12 +59,12 @@ definePageMeta({
       <tbody>
         <tr v-for="item in data" :key="item.nama_barang">
           <td>{{ item.nama_barang }}</td>
-          <td>{{ item.jumlah }}</td>
+          <td align="right">{{ item.jumlah }}</td>
           <td>{{ item.satuan }}</td>
-          <td>
+          <td align="right">
             {{ formatCurrency(item.harga_jual) }}
           </td>
-          <td>
+          <td align="right">
             {{ formatCurrency(item.sub_total) }}
           </td>
         </tr>

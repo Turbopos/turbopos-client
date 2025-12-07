@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import moment from "moment";
-import "~/assets/css/print.css";
+import "~/assets/css/print.scss";
 
 import useGetProfitLossCategoryReport from "~/composables/report/useGetProfitLossCategoryReport";
 import { formatCurrency } from "~/lib/currency";
@@ -38,10 +38,12 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="a4" ref="element">
+  <div class="print-element a4" ref="element">
     <div class="title">
       Laporan Laba Rugi per Kategori
-      <div v-if="query.month">Bulan {{ moment(query.month + "-01").format("MMMM YYYY") }}</div>
+      <div v-if="query.month">
+        Bulan {{ moment(query.month + "-01").format("MMMM YYYY") }}
+      </div>
     </div>
 
     <table>
@@ -54,7 +56,7 @@ definePageMeta({
       <tbody>
         <tr v-for="item in data" :key="item.kategori">
           <td>{{ item.kategori }}</td>
-          <td>
+          <td align="right">
             {{ formatCurrency(item.total_laba_rugi) }}
           </td>
         </tr>

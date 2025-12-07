@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+useSettingStore();
+
 const auth = useAuthStore();
 const router = useRouter();
 const route = useRoute();
@@ -45,7 +47,7 @@ definePageMeta({
 <template>
   <div
     class="fixed z-50 flex items-center justify-center w-screen h-screen bg-background"
-    v-if="loading"
+    v-if="loading && !route.path.includes('print')"
   >
     <Spinner class="size-10 text-primary"></Spinner>
   </div>

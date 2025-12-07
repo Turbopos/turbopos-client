@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import "~/assets/css/print.css";
+import "~/assets/css/print.scss";
 
 import useGetStockReport from "~/composables/report/useGetStockReport";
 
@@ -36,10 +36,8 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="a4" ref="element">
-    <div class="title">
-      Laporan Stok Barang
-    </div>
+  <div class="print-element a4" ref="element">
+    <div class="title">Laporan Stok Barang</div>
 
     <table>
       <thead>
@@ -53,9 +51,9 @@ definePageMeta({
       <tbody>
         <tr v-for="item in data" :key="item.nama_barang">
           <td>{{ item.nama_barang }}</td>
-          <td>{{ item.jumlah }}</td>
-          <td>{{ item.satuan }}</td>
-          <td>{{ item.stok }}</td>
+          <td align="right">{{ item.jumlah }}</td>
+          <td align="right">{{ item.satuan }}</td>
+          <td align="right">{{ item.stok }}</td>
         </tr>
       </tbody>
     </table>

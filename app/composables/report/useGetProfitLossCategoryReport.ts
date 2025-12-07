@@ -4,10 +4,14 @@ import type {
 } from "~/types";
 import { http } from "~/lib/http";
 
-export default function () {
+export interface Props {
+  limit?: number;
+}
+
+export default function (props?: Props) {
   const payload = ref<ProfitLossCategoryReportRequest>({
     page: 1,
-    limit: 10,
+    limit: props?.limit || 10,
   });
 
   const { result, error, refresh, loading } =

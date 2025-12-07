@@ -1,0 +1,103 @@
+*:has(.print-element) {
+  all: unset;
+  font-family: sans-serif;
+  box-sizing: border-box;
+  font-size: 11pt;
+  line-height: 1.15;
+}
+
+html:has(.print-element) {
+  height: 100vh;
+  width: 100vw;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #22242a;
+
+  script,
+  style {
+    display: none;
+  }
+
+  .a4 {
+    background-color: white;
+    display: block;
+    width: 210mm;
+    padding: 60px;
+  }
+
+  .title,
+  .title * {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    display: table;
+  }
+
+  table tr {
+    display: table-row;
+  }
+
+  table thead {
+    display: table-header-group;
+  }
+
+  table tbody {
+    display: table-row-group;
+  }
+
+  table th,
+  table td {
+    padding: 3px 8px;
+    padding-bottom: 8px;
+    display: table-cell;
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+  }
+
+  table td[align="right"] {
+    text-align: right;
+  }
+
+  table td:first-child,
+  table th:first-child {
+    border-left: 1px solid #000;
+  }
+
+  table tr:first-child td,
+  table tr:first-child th {
+    border-top: 1px solid #000;
+  }
+
+  table thead tr:last-child th,
+  table thead tr:last-child td {
+    border-bottom: none;
+    border-bottom: none;
+  }
+
+  table th {
+    background-color: #cdcdcd;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  table.no-border * {
+    border-style: none !important;
+    border-width: 0 !important;
+
+    td,
+    th {
+      padding: 3px;
+    }
+  }
+}
