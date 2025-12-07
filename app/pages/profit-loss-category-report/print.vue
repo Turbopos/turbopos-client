@@ -41,8 +41,13 @@ definePageMeta({
   <div class="print-element a4" ref="element">
     <div class="title">
       Laporan Laba Rugi per Kategori
-      <div v-if="query.month">
-        Bulan {{ moment(query.month + "-01").format("MMMM YYYY") }}
+      <div>
+        Bulan
+        {{
+          moment(query.month ? query.month + "-01" : new Date())
+            .locale("id")
+            .format("MMMM YYYY")
+        }}
       </div>
     </div>
 

@@ -7,6 +7,7 @@ import { formatDate } from "~/lib/date";
 const route = useRoute();
 const id = Number(route.params.id);
 const element = ref();
+const settingStore = useSettingStore();
 
 const { result } = useGetSalesTransaction(id);
 
@@ -46,7 +47,13 @@ definePageMeta({
 
 <template>
   <div class="print-element a4" ref="element">
-    <div class="title">Nota Penjualan</div>
+    <div class="title">
+      NOTA PENJUALAN
+      <div class="subtitle">
+        <div>{{ settingStore.setting?.nama }}</div>
+        <div>{{ settingStore.setting?.alamat }}</div>
+      </div>
+    </div>
 
     <div class="grid">
       <div>

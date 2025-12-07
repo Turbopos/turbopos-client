@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import Heading from "~/components/main/Heading.vue";
 import SettingSaveForm from "~/components/setting/SettingSaveForm.vue";
-import { useGetSetting } from "~/composables/setting/useGetSetting";
 import { useUpdateSetting } from "~/composables/setting/useUpdateSetting";
 import type { UpdateSettingRequest } from "~/types";
 
-const { result } = useGetSetting();
+const settingStore = useSettingStore();
 const { execute, loading: updateLoading, error } = useUpdateSetting();
+
+const setting = computed(() => settingStore.setting);
 
 async function onSubmit(values: UpdateSettingRequest) {
   await execute(values);
@@ -25,19 +26,19 @@ async function onSubmit(values: UpdateSettingRequest) {
     ]"
   ></Heading>
 
-  <Card v-if="result?.setting">
+  <Card v-if="setting">
     <CardContent>
       <div class="grid grid-cols-1 gap-6">
         <div>
           <Label class="text-sm font-medium text-muted-foreground">Nama</Label>
           <p class="text-lg font-semibold">
-            {{ result.setting.nama }}
+            {{ setting.nama }}
           </p>
         </div>
         <div>
           <Label class="text-sm font-medium text-muted-foreground">Email</Label>
           <p class="text-lg font-semibold">
-            {{ result.setting.email }}
+            {{ setting.email }}
           </p>
         </div>
         <div>
@@ -45,7 +46,7 @@ async function onSubmit(values: UpdateSettingRequest) {
             >Telepon</Label
           >
           <p class="text-lg font-semibold">
-            {{ result.setting.telepon }}
+            {{ setting.telepon }}
           </p>
         </div>
         <div>
@@ -53,7 +54,7 @@ async function onSubmit(values: UpdateSettingRequest) {
             >Alamat</Label
           >
           <p class="text-lg font-semibold">
-            {{ result.setting.alamat }}
+            {{ setting.alamat }}
           </p>
         </div>
       </div>
@@ -61,8 +62,8 @@ async function onSubmit(values: UpdateSettingRequest) {
   </Card>
 
   <SettingSaveForm
-    v-if="result"
-    :setting="result.setting"
+    v-if="setting"
+    :setting="setting"
     :loading="updateLoading"
     @save="onSubmit"
   />

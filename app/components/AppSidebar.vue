@@ -11,6 +11,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import {
   ArrowLeftRight,
@@ -29,6 +30,7 @@ import type { NavMain } from "~/types";
 const props = defineProps<SidebarProps>();
 const config = useRuntimeConfig().public;
 const auth = useAuthStore();
+const sidebar = useSidebar();
 
 // This is sample data.
 const data: {
@@ -178,6 +180,7 @@ const navMains = computed(() => {
                 :class="{
                   'bg-primary! text-white!': childItem.isActive,
                 }"
+                @click="() => sidebar.setOpenMobile(false)"
               >
                 <NuxtLink :to="childItem.url" class="flex items-center gap-2">
                   <component

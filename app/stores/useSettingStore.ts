@@ -12,7 +12,9 @@ export const useSettingStore = defineStore("setting", () => {
   watch(
     result,
     () => {
-      setting.value = result.value?.setting;
+      if (result.value) {
+        setting.value = result.value.setting;
+      }
     },
     { deep: true },
   );

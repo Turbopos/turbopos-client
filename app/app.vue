@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-useSettingStore();
+import "moment/locale/id";
 
+useSettingStore();
 const auth = useAuthStore();
 const router = useRouter();
 const route = useRoute();

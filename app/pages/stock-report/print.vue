@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import moment from "moment";
 import "~/assets/css/print.scss";
 
 import useGetStockReport from "~/composables/report/useGetStockReport";
@@ -37,7 +38,17 @@ definePageMeta({
 
 <template>
   <div class="print-element a4" ref="element">
-    <div class="title">Laporan Stok Barang</div>
+    <div class="title">
+      Laporan Stok Barang
+      <div>
+        Bulan
+        {{
+          moment(query.month ? query.month + "-01" : new Date())
+            .locale("id")
+            .format("MMMM YYYY")
+        }}
+      </div>
+    </div>
 
     <table>
       <thead>
