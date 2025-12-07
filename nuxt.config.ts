@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   // css: ["~/assets/css/tailwind.css"],
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [tailwindcss()] as any,
   },
   modules: ["shadcn-nuxt", "nuxt-lucide-icons", "@pinia/nuxt"],
   shadcn: {
