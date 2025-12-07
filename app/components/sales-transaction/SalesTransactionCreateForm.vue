@@ -244,71 +244,67 @@ function confirmSalesTransaction() {
           <Card v-for="(item, i) in values.items" :key="i">
             <CardContent>
               <div class="flex items-start justify-between gap-3">
-                <div class="flex-1 space-y-3">
+                <div
+                  class="flex-1 space-y-3 grid md:grid-cols-6 grid-cols-2 gap-3"
+                >
+                  <div class="col-span-2">
+                    <FormGroup
+                      :name="`items[${i}].product`"
+                      v-slot="{ value, setValue }"
+                      label="Produk"
+                    >
+                      <ComboboxProduct
+                        :model-value="value"
+                        @update:model-value="
+                          (val) => {
+                            setValue(val);
+                            setFieldValue(
+                              `items[${i}].harga_jual` as never,
+                              val.harga_jual! as never,
+                            );
+                          }
+                        "
+                      />
+                    </FormGroup>
+                  </div>
+
                   <FormGroup
-                    :name="`items[${i}].product`"
-                    v-slot="{ value, setValue }"
-                    label="Produk"
+                    :name="`items[${i}].harga_jual`"
+                    v-slot="{ componentField }"
+                    label="Harga Jual"
                   >
-                    <ComboboxProduct
-                      :model-value="value"
-                      @update:model-value="
-                        (val) => {
-                          setValue(val);
-                          setFieldValue(
-                            `items[${i}].harga_jual` as never,
-                            val.harga_jual! as never,
-                          );
-                        }
-                      "
+                    <Input
+                      placeholder="Harga Jual"
+                      type="number"
+                      v-bind="componentField"
+                      disabled
                     />
                   </FormGroup>
-
-                  <div class="flex items-center gap-3">
-                    <div class="flex-1">
-                      <FormGroup
-                        :name="`items[${i}].harga_jual`"
-                        v-slot="{ componentField }"
-                        label="Harga Jual"
-                      >
-                        <Input
-                          placeholder="Harga Jual"
-                          type="number"
-                          v-bind="componentField"
-                          disabled
-                        />
-                      </FormGroup>
-                    </div>
-                    <div class="w-48">
-                      <FormGroup
-                        :name="`items[${i}].jumlah`"
-                        v-slot="{ componentField }"
-                        label="Jumlah"
-                      >
-                        <Input
-                          type="number"
-                          min="0"
-                          v-bind="componentField"
-                          placeholder="Jumlah"
-                        />
-                      </FormGroup>
-                    </div>
-                    <div class="w-48">
-                      <FormGroup
-                        :name="`items[${i}].diskon`"
-                        v-slot="{ componentField }"
-                        label="Diskon"
-                      >
-                        <Input
-                          type="number"
-                          min="0"
-                          max="100"
-                          v-bind="componentField"
-                          placeholder="Diskon"
-                        />
-                      </FormGroup>
-                    </div>
-                  </div>
+                  <FormGroup
+                    :name="`items[${i}].jumlah`"
+                    v-slot="{ componentField }"
+                    label="Jumlah"
+                  >
+                    <Input
+                      type="number"
+                      min="0"
+                      v-bind="componentField"
+                      placeholder="Jumlah"
+                    />
+                  </FormGroup>
+                  <FormGroup
+                    :name="`items[${i}].diskon`"
+                    v-slot="{ componentField }"
+                    label="Diskon"
+                  >
+                    <Input
+                      type="number"
+                      min="0"
+                      max="100"
+                      v-bind="componentField"
+                      placeholder="Diskon"
+                    />
+                  </FormGroup>
 
                   <FormGroup :name="`items[${i}].subtotal`" label="Subtotal">
                     <Input
@@ -324,22 +320,21 @@ function confirmSalesTransaction() {
                       "
                     />
                   </FormGroup>
+                </div>
 
-                  <div
-                    class="flex justify-end"
-                    v-if="values.items && values.items?.length > 1"
+                <div
+                  class="flex justify-end"
+                  v-if="values.items && values.items?.length > 1"
+                >
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    class="text-destructive md:mt-7"
+                    @click="removeItem(i)"
                   >
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      class="text-destructive"
-                      @click="removeItem(i)"
-                    >
-                      <Trash class="size-4" />
-                      Hapus Item
-                    </Button>
-                  </div>
+                    <Trash class="size-4" />
+                  </Button>
                 </div>
               </div>
             </CardContent>

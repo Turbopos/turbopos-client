@@ -164,56 +164,54 @@ watch(distributor, resetItems);
         <Card v-for="(item, i) in values.items">
           <CardContent>
             <div class="flex items-start justify-between gap-3">
-              <div class="flex-1 space-y-3">
+              <div
+                class="flex-1 space-y-3 grid md:grid-cols-5 grid-cols-2 gap-3"
+              >
+                <div class="col-span-2">
+                  <FormGroup
+                    :name="`items[${i}].product`"
+                    v-slot="{ value, setValue }"
+                    label="Produk"
+                  >
+                    <ComboboxProduct
+                      :model-value="value"
+                      :distributor-id="distributor?.id"
+                      @update:model-value="
+                        (val) => {
+                          setValue(val);
+                          setFieldValue(
+                            `items[${i}].harga_pokok`,
+                            val.harga_pokok! as never,
+                          );
+                        }
+                      "
+                    />
+                  </FormGroup>
+                </div>
+
                 <FormGroup
-                  :name="`items[${i}].product`"
-                  v-slot="{ value, setValue }"
-                  label="Produk"
+                  :name="`items[${i}].harga_pokok`"
+                  v-slot="{ componentField }"
+                  label="Harga Pokok"
                 >
-                  <ComboboxProduct
-                    :model-value="value"
-                    :distributor-id="distributor?.id"
-                    @update:model-value="
-                      (val) => {
-                        setValue(val);
-                        setFieldValue(
-                          `items[${i}].harga_pokok`,
-                          val.harga_pokok! as never,
-                        );
-                      }
-                    "
+                  <Input
+                    placeholder="Harga Pokok"
+                    type="number"
+                    v-bind="componentField"
                   />
                 </FormGroup>
-
-                <div class="flex items-center gap-3">
-                  <div class="flex-1">
-                    <FormGroup
-                      :name="`items[${i}].harga_pokok`"
-                      v-slot="{ componentField }"
-                      label="Harga Pokok"
-                    >
-                      <Input
-                        placeholder="Harga Pokok"
-                        type="number"
-                        v-bind="componentField"
-                      />
-                    </FormGroup>
-                  </div>
-                  <div class="w-48">
-                    <FormGroup
-                      :name="`items[${i}].jumlah`"
-                      v-slot="{ componentField }"
-                      label="Jumlah"
-                    >
-                      <Input
-                        type="number"
-                        min="0"
-                        v-bind="componentField"
-                        placeholder="Jumlah"
-                      />
-                    </FormGroup>
-                  </div>
-                </div>
+                <FormGroup
+                  :name="`items[${i}].jumlah`"
+                  v-slot="{ componentField }"
+                  label="Jumlah"
+                >
+                  <Input
+                    type="number"
+                    min="0"
+                    v-bind="componentField"
+                    placeholder="Jumlah"
+                  />
+                </FormGroup>
 
                 <FormGroup :name="`items[${i}].subtotal`" label="Subtotal">
                   <Input
@@ -223,22 +221,21 @@ watch(distributor, resetItems);
                     "
                   />
                 </FormGroup>
+              </div>
 
-                <div
-                  class="flex justify-end"
-                  v-if="values.items && values.items?.length > 1"
+              <div
+                class="flex justify-end"
+                v-if="values.items && values.items?.length > 1"
+              >
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  class="text-destructive md:mt-7"
+                  @click="removeItem(i)"
                 >
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    class="text-destructive"
-                    @click="removeItem(i)"
-                  >
-                    <Trash class="size-4" />
-                    Hapus Item
-                  </Button>
-                </div>
+                  <Trash class="size-4" />
+                </Button>
               </div>
             </div>
           </CardContent>
