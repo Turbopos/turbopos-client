@@ -60,9 +60,15 @@ html:has(.print-element) {
   table {
     width: 100%;
     max-width: 100%;
+    max-width: calc(210mm - 120px);
     border-collapse: collapse;
     border-spacing: 0;
     display: table;
+  }
+
+  .grid {
+    flex-grow: 1;
+    min-width: 0;
   }
 
   table tr {

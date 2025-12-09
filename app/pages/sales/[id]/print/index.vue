@@ -11,25 +11,28 @@ const settingStore = useSettingStore();
 
 const { result } = useGetSalesTransaction(id);
 
-watch(result, async () => {
-  if (result.value) {
-    const { $html2pdf } = useNuxtApp();
+watch(
+  () => [result.value, settingStore.setting],
+  async () => {
+    if (result.value && settingStore.setting) {
+      const { $html2pdf } = useNuxtApp();
 
-    await $html2pdf
-      .set({
-        filename: `${result.value.sales_transaction.kode}.pdf`,
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: "cm", format: "a4", orientation: "portrait" },
-      })
-      .from(element.value)
-      .toPdf()
-      .get("pdf")
-      .then((pdf) => {
-        const blob = pdf.output("bloburl");
-        window.location.href = blob;
-      });
-  }
-});
+      await $html2pdf
+        .set({
+          filename: `${result.value.sales_transaction.kode}.pdf`,
+          html2canvas: { scale: 2 },
+          jsPDF: { unit: "cm", format: "a4", orientation: "portrait" },
+        })
+        .from(element.value)
+        .toPdf()
+        .get("pdf")
+        .then((pdf) => {
+          const blob = pdf.output("bloburl");
+          window.location.href = blob;
+        });
+    }
+  },
+);
 
 definePageMeta({
   layout: "plain",
