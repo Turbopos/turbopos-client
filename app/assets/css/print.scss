@@ -67,8 +67,18 @@ html:has(.print-element) {
   }
 
   .grid {
-    flex-grow: 1;
-    min-width: 0;
+    display: flex;
+    max-width: 100%;
+    gap: 8px;
+
+    > div:has(table) {
+      flex-grow: 1;
+      min-width: 0;
+    }
+
+    > div:empty {
+      width: 20px;
+    }
   }
 
   table tr {
