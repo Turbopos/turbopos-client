@@ -4,6 +4,14 @@
   box-sizing: border-box;
   font-size: 11pt;
   line-height: 1.15;
+
+  * {
+    all: unset;
+    font-family: sans-serif;
+    box-sizing: border-box;
+    font-size: 11pt;
+    line-height: 1.15;
+  }
 }
 
 html:has(.print-element) {
@@ -51,6 +59,7 @@ html:has(.print-element) {
 
   table {
     width: 100%;
+    max-width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
     display: table;
