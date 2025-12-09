@@ -17,6 +17,7 @@ const element = ref();
 watch(data, async () => {
   const { $html2pdf } = useNuxtApp();
 
+  await new Promise((res) => setTimeout(res, 1000));
   await $html2pdf
     .set({
       filename: "myfile.pdf",
