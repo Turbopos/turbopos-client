@@ -33,10 +33,8 @@ const auth = useAuthStore();
 const sidebar = useSidebar();
 
 // This is sample data.
-const data: {
-  navMain: NavMain[];
-} = {
-  navMain: [
+const data = computed(() => {
+  const navMain: NavMain[] = [
     {
       title: "Beranda",
       url: "javascript:void(0);",
@@ -140,11 +138,15 @@ const data: {
         },
       ],
     },
-  ],
-};
+  ];
+
+  return {
+    navMain,
+  };
+});
 
 const navMains = computed(() => {
-  return data.navMain.map((nav) => {
+  return data.value.navMain.map((nav) => {
     return {
       ...nav,
       items: nav.items?.map((item) => {
