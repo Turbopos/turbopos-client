@@ -70,7 +70,15 @@ definePageMeta({
             {{ formatCurrency(item.harga_pokok) }}
           </td>
           <td align="right">
-            {{ formatCurrency(item.sub_total) }}
+            {{ formatCurrency(item.total) }}
+          </td>
+        </tr>
+        <tr v-if="data.length > 0">
+          <td colspan="4" align="right">TOTAL</td>
+          <td align="right">
+            {{
+              formatCurrency(data.map((d) => d.total).reduce((a, b) => a + b))
+            }}
           </td>
         </tr>
       </tbody>

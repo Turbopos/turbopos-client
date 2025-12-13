@@ -80,7 +80,6 @@ function print() {
               <TableHead>Nama Barang</TableHead>
               <TableHead>Jumlah</TableHead>
               <TableHead>Satuan</TableHead>
-              <TableHead>Stok</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -88,7 +87,6 @@ function print() {
               <TableCell>{{ item.nama_barang }}</TableCell>
               <TableCell>{{ item.jumlah }}</TableCell>
               <TableCell>{{ item.satuan }}</TableCell>
-              <TableCell>{{ item.stok }}</TableCell>
             </TableRow>
           </TableBody>
           <TableCaption v-if="data.length == 0">

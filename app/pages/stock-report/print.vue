@@ -56,7 +56,6 @@ definePageMeta({
           <th>Nama Barang</th>
           <th>Jumlah</th>
           <th>Satuan</th>
-          <th>Stok</th>
         </tr>
       </thead>
       <tbody>
@@ -64,7 +63,6 @@ definePageMeta({
           <td>{{ item.nama_barang }}</td>
           <td align="right">{{ item.jumlah }}</td>
           <td align="right">{{ item.satuan }}</td>
-          <td align="right">{{ item.stok }}</td>
         </tr>
       </tbody>
     </table>

@@ -73,6 +73,14 @@ definePageMeta({
             {{ formatCurrency(item.sub_total) }}
           </td>
         </tr>
+        <tr v-if="data.length > 0">
+          <td colspan="4" align="right">TOTAL</td>
+          <td align="right">
+            {{
+              formatCurrency(data.map((d) => d.total).reduce((a, b) => a + b))
+            }}
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>

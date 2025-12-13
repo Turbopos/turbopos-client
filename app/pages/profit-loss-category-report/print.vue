@@ -65,6 +65,16 @@ definePageMeta({
             {{ formatCurrency(item.total_laba_rugi) }}
           </td>
         </tr>
+        <tr v-if="data.length > 0">
+          <td colspan="1" align="right">TOTAL</td>
+          <td align="right">
+            {{
+              formatCurrency(
+                data.map((d) => d.total_laba_rugi).reduce((a, b) => a + b),
+              )
+            }}
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
