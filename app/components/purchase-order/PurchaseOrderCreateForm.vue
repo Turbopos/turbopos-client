@@ -51,6 +51,7 @@ const { values, setFieldValue, setValues, errors } = useForm({
             ),
             nama: string(),
             harga_pokok: number().optional(),
+            satuan: string().optional(),
           }),
           jumlah: number().min(1, "Jumlah harus diisi"),
           harga_pokok: number().min(1, "Harga pokok harus diisi"),
@@ -205,12 +206,21 @@ watch(distributor, resetItems);
                   v-slot="{ componentField }"
                   label="Jumlah"
                 >
-                  <Input
-                    type="number"
-                    min="0"
-                    v-bind="componentField"
-                    placeholder="Jumlah"
-                  />
+                  <div class="flex items-stretch">
+                    <Input
+                      type="number"
+                      min="0"
+                      v-bind="componentField"
+                      placeholder="Jumlah"
+                      :class="{ 'rounded-r-none': item.product?.satuan }"
+                    />
+                    <div
+                      v-if="item.product?.satuan"
+                      class="bg-muted/10 border border-border border-l-0 px-2 text-sm rounded-r-lg flex items-center justify-center"
+                    >
+                      {{ item.product?.satuan }}
+                    </div>
+                  </div>
                 </FormGroup>
 
                 <FormGroup :name="`items[${i}].subtotal`" label="Subtotal">

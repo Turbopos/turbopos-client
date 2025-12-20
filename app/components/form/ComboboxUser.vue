@@ -11,6 +11,7 @@ import type { Role } from "~/utils/constants";
 const props = defineProps<{
   modelValue?: User;
   role?: Role;
+  placeholder?: string;
 }>();
 
 const emits = defineEmits<{
@@ -21,6 +22,7 @@ const { result, loading } = useGetUsers({ limit: 500, role: props.role });
 
 const open = ref(false);
 const value = useVModel(props, "modelValue", emits);
+const placeholder = computed(() => props.placeholder || "Pilih User");
 
 function handleSelect(val: User) {
   value.value = val.id == value.value?.id ? undefined : val;
@@ -37,19 +39,19 @@ function handleSelect(val: User) {
         :aria-expanded="open"
         class="w-full justify-between"
       >
-        {{ value?.nama || "Pilih User" }}
+        {{ value?.nama || placeholder }}
         <ChevronsUpDownIcon class="opacity-50" />
       </Button>
     </PopoverTrigger>
     <PopoverContent class="w-full p-0">
       <Command class="w-full">
         <div class="relative">
-          <CommandInput class="h-9 w-full" placeholder="Cari customer..." />
+          <CommandInput class="h-9 w-full" placeholder="Cari..." />
         </div>
         <CommandList>
           <CommandEmpty v-if="loading">Memuat...</CommandEmpty>
           <template v-else>
-            <CommandEmpty>Tidak ada customer ditemukan.</CommandEmpty>
+            <CommandEmpty>Tidak ada pengguna ditemukan.</CommandEmpty>
             <CommandGroup>
               <CommandItem
                 v-for="user in result?.users"

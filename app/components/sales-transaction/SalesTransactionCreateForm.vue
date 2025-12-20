@@ -69,6 +69,7 @@ const { values, setFieldValue, setValues, errors } = useForm({
             ),
             nama: string(),
             harga_jual: number().optional(),
+            satuan: string().optional(),
           }),
           jumlah: number().min(1, "Jumlah harus diisi"),
           ppn: number().optional(),
@@ -85,6 +86,7 @@ const { values, setFieldValue, setValues, errors } = useForm({
               id: detail.product_id,
               nama: detail.product.nama,
               harga_jual: detail.harga_jual,
+              satuan: detail.product.satuan,
             },
             jumlah: detail.jumlah,
             ppn: detail.ppn,
@@ -285,12 +287,21 @@ function confirmSalesTransaction() {
                     v-slot="{ componentField }"
                     label="Jumlah"
                   >
-                    <Input
-                      type="number"
-                      min="0"
-                      v-bind="componentField"
-                      placeholder="Jumlah"
-                    />
+                    <div class="flex items-stretch">
+                      <Input
+                        type="number"
+                        min="0"
+                        v-bind="componentField"
+                        placeholder="Jumlah"
+                        :class="{ 'rounded-r-none': item.product?.satuan }"
+                      />
+                      <div
+                        v-if="item.product?.satuan"
+                        class="bg-muted/10 border border-border border-l-0 px-2 text-sm rounded-r-lg flex items-center justify-center"
+                      >
+                        {{ item.product?.satuan }}
+                      </div>
+                    </div>
                   </FormGroup>
                   <FormGroup
                     :name="`items[${i}].diskon`"
@@ -426,7 +437,11 @@ function confirmSalesTransaction() {
           <!-- </FormGroup> -->
 
           <FormGroup name="mekanik" label="Pilih Mekanik">
-            <ComboboxUser v-model="mekanik" :role="Role.Mekanik" />
+            <ComboboxUser
+              v-model="mekanik"
+              placeholder="Pilih Mekanik"
+              :role="Role.Mekanik"
+            />
           </FormGroup>
 
           <FormGroup name="total" label="Total">
