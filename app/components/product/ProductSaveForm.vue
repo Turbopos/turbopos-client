@@ -170,7 +170,7 @@ const onSubmit = handleSubmit((values) => {
         </FormGroup>
 
         <div class="flex items-center gap-2">
-          <div class="flex-1 min-w-0">
+          <div class="flex-1 min-w-0" v-if="values.jenis === 'barang'">
             <FormGroup
               v-if="values.jenis === 'barang'"
               name="harga_pokok"
@@ -195,7 +195,7 @@ const onSubmit = handleSubmit((values) => {
             </FormGroup>
           </div>
 
-          <div class="w-24">
+          <div class="w-24" v-if="values.jenis === 'barang'">
             <FormGroup
               name="margin"
               label="Margin (%)"
@@ -237,7 +237,7 @@ const onSubmit = handleSubmit((values) => {
           </div>
         </div>
 
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2" v-if="values.jenis === 'barang'">
           <div class="flex-1 min-w-0">
             <FormGroup
               v-if="values.jenis === 'barang'"
