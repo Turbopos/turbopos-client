@@ -14,3 +14,4 @@ export * from "./report";
 export * from "./step";
 export * from "./setting";
 export * from "./sort";
+export * from "./opname";
