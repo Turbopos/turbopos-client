@@ -3,6 +3,7 @@ import moment from "moment";
 import "~/assets/css/print.scss";
 
 import useGetStockReport from "~/composables/report/useGetStockReport";
+import { formatCurrency } from "~/lib/currency";
 
 const query = useRoute().query;
 
@@ -31,6 +32,16 @@ watch(data, async () => {
     });
 });
 
+const total = computed(() => {
+  let t = 0;
+
+  for (const item of data.value) {
+    t += item.subtotal;
+  }
+
+  return t;
+});
+
 definePageMeta({
   layout: "plain",
 });
@@ -54,15 +65,23 @@ definePageMeta({
       <thead>
         <tr>
           <th>Nama Barang</th>
-          <th>Jumlah</th>
+          <th>Stok</th>
           <th>Satuan</th>
+          <th>Harga Pokok</th>
+          <th>Subtotal</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in data" :key="item.nama_barang">
           <td>{{ item.nama_barang }}</td>
           <td align="right">{{ item.jumlah }}</td>
-          <td align="right">{{ item.satuan }}</td>
+          <td align="center">{{ item.satuan }}</td>
+          <td align="right">{{ formatCurrency(item.harga_pokok) }}</td>
+          <td align="right">{{ formatCurrency(item.subtotal) }}</td>
+        </tr>
+        <tr>
+          <td colspan="4" align="right">TOTAL NILAI STOK</td>
+          <td align="right">{{ formatCurrency(total) }}</td>
         </tr>
       </tbody>
     </table>
