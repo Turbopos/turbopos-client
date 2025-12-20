@@ -1,4 +1,9 @@
-import type { Distributor, ProductsRequest, ProductsResponse } from "~/types";
+import type {
+  Distributor,
+  ProductsRequest,
+  ProductsResponse,
+  SortValue,
+} from "~/types";
 import { http } from "~/lib/http";
 
 interface Props {
@@ -8,12 +13,18 @@ interface Props {
 
 export default function (props?: Props) {
   const distributor = ref<Distributor>();
+  const sort = ref<SortValue>({
+    field: "nama",
+    order: "asc",
+  });
   const payload = ref<ProductsRequest>({
     limit: props?.limit || 10,
     search: "",
     page: 1,
     distributor_id: props?.distributor_id,
     jenis: "" as any,
+    order_by: sort.value.field,
+    sort: sort.value.order,
   });
 
   const { result, error, refresh, loading } = useQuery<ProductsResponse>(
@@ -23,6 +34,11 @@ export default function (props?: Props) {
 
   watch(distributor, () => {
     payload.value.distributor_id = distributor.value?.id || undefined;
+  });
+
+  watch(sort, () => {
+    payload.value.order_by = sort.value.field;
+    payload.value.sort = sort.value.order;
   });
 
   watch(
@@ -50,5 +66,6 @@ export default function (props?: Props) {
     loading,
     payload,
     distributor,
+    sort,
   };
 }

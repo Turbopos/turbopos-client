@@ -13,3 +13,4 @@ export * from "./sales-transaction";
 export * from "./report";
 export * from "./step";
 export * from "./setting";
+export * from "./sort";

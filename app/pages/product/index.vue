@@ -10,8 +10,9 @@ import Listdown from "~/components/form/Listdown.vue";
 import { productTypeOptions } from "~/utils/constants";
 import ComboboxDistributor from "~/components/form/ComboboxDistributor.vue";
 import { formatCurrency } from "~/lib/currency";
+import SortDropdown from "~/components/form/SortDropdown.vue";
 
-const { result, loading, error, refresh, payload, distributor } =
+const { result, loading, error, refresh, payload, distributor, sort } =
   useGetProducts();
 const { execute: destroy, loading: deleteLoading } = useDeleteProduct();
 const authStore = useAuthStore();
@@ -49,13 +50,22 @@ async function handleDelete(id: number) {
       <div class="w-48">
         <ComboboxDistributor v-model="distributor" />
       </div>
-      <div class="w-48">
+      <div class="w-32">
         <Listdown
           :items="productTypeOptions"
           v-model="payload.jenis"
           placeholder="Semua Jenis"
           with-all
         ></Listdown>
+      </div>
+      <div class="w-32">
+        <SortDropdown
+          :items="[
+            { label: 'Nama', value: 'nama' },
+            { label: 'Stok', value: 'stok' },
+          ]"
+          v-model="sort"
+        ></SortDropdown>
       </div>
     </div>
     <Card>

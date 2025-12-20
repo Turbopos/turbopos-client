@@ -27,6 +27,8 @@ export interface ProductsRequest {
   search?: string;
   limit?: number;
   page?: number;
+  order_by?: string;
+  sort?: "asc" | "desc";
 }
 
 export interface ProductsResponse {
