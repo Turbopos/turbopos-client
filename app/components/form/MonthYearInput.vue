@@ -42,8 +42,8 @@ const monthOptions = Array.from({ length: 12 }, (_, i) => ({
   label: monthNames[i],
 }));
 
-const yearOptions = Array.from({ length: currentYear - 2000 + 1 }, (_, i) => {
-  const year = (2000 + i).toString();
+const yearOptions = Array.from({ length: 2040 - 2025 + 1 }, (_, i) => {
+  const year = (2025 + i).toString();
   return { value: year, label: year };
 });
 
