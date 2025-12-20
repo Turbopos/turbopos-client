@@ -66,6 +66,7 @@ const data = computed(() => {
           title: "Data Barang & Jasa",
           icon: Speaker,
           url: "/product",
+          hidden: !auth.user?.is_admin,
         },
         {
           title: "Data Distributor",
@@ -90,7 +91,7 @@ const data = computed(() => {
           icon: ArrowLeftRight,
         },
         {
-          title: "Transaksi Penjualan & Servis",
+          title: "Transaksi Penjualan & Jasa",
           url: "/sales",
           icon: BanknoteArrowUp,
         },
@@ -104,6 +105,7 @@ const data = computed(() => {
           title: "Laporan Pembelian",
           url: "/purchase-order-report",
           icon: ArrowLeftRight,
+          hidden: !auth.user?.is_admin,
         },
         {
           title: "Laporan Penjualan",
@@ -114,6 +116,7 @@ const data = computed(() => {
           title: "Laporan Rugi Laba",
           url: "/profit-loss-report",
           icon: BadgeDollarSign,
+          hidden: !auth.user?.is_admin,
         },
         {
           title: "Laporan Stok Produk",
