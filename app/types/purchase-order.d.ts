@@ -1,3 +1,7 @@
+import type { Distributor } from "./distributor";
+import type { Product } from "./product";
+import type { User } from "./user";
+
 export interface PurchaseOrderDetail {
   id: number;
   product_id: number;
@@ -6,10 +10,7 @@ export interface PurchaseOrderDetail {
   ppn: number;
   diskon: number;
   subtotal: number;
-  product: {
-    id: number;
-    nama: string;
-  };
+  product: Product;
 }
 
 export interface PurchaseOrder {
@@ -25,14 +26,8 @@ export interface PurchaseOrder {
   transaction_at: string;
   created_at: string;
   updated_at: string;
-  distributor: {
-    id: number;
-    nama: string;
-  };
-  user: {
-    id: number;
-    nama: string;
-  };
+  distributor: Distributor;
+  user: User;
   details: PurchaseOrderDetail[];
 }
 
