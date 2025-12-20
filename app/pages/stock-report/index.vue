@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { formatCurrency } from "~/lib/currency";
 import useGetStockReport from "~/composables/report/useGetStockReport";
 import SelectCategory from "~/components/form/SelectCategory.vue";
 import {
@@ -78,8 +79,10 @@ function print() {
           <TableHeader>
             <TableRow>
               <TableHead>Nama Barang</TableHead>
-              <TableHead>Jumlah</TableHead>
+              <TableHead>Stok</TableHead>
               <TableHead>Satuan</TableHead>
+              <TableHead>Harga Pokok</TableHead>
+              <TableHead>Subtotal</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -87,6 +90,8 @@ function print() {
               <TableCell>{{ item.nama_barang }}</TableCell>
               <TableCell>{{ item.jumlah }}</TableCell>
               <TableCell>{{ item.satuan }}</TableCell>
+              <TableCell>{{ formatCurrency(item.harga_pokok) }}</TableCell>
+              <TableCell>{{ formatCurrency(item.subtotal) }}</TableCell>
             </TableRow>
           </TableBody>
           <TableCaption v-if="data.length == 0">

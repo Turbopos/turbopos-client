@@ -82,9 +82,10 @@ export interface ProfitLossCategoryReportRequest {
 
 export interface StockReportItem {
   nama_barang: string;
+  harga_pokok: number;
   jumlah: number;
   satuan: string;
-  stok: number;
+  subtotal: number;
 }
 
 export interface StockReportResponse {
