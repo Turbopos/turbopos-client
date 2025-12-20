@@ -8,6 +8,7 @@ export interface Product {
   category_id: number;
   category?: Category;
   nama: string;
+  sn?: string;
   barcode: string;
   distributor_id?: number;
   distributor?: Distributor;
@@ -42,6 +43,7 @@ export interface CreateProductRequest {
   jenis: "barang" | "jasa";
   category_id: number;
   nama: string;
+  sn?: string;
   distributor_id?: number;
   harga_pokok?: number;
   harga_jual: number;
@@ -54,6 +56,7 @@ export interface UpdateProductRequest {
   jenis?: "barang" | "jasa";
   category_id?: number;
   nama?: string;
+  sn?: string;
   distributor_id?: number;
   harga_pokok?: number;
   harga_jual?: number;

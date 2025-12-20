@@ -33,6 +33,7 @@ const validationSchema = toTypedSchema(
     }).optional(),
     category_id: number().min(1, "Kategori harus dipilih"),
     nama: string().min(1, "Nama harus diisi"),
+    sn: string().optional(),
     harga_pokok: number().optional(),
     harga_jual: number().min(0, "Harga jual harus diisi"),
     stok: number().optional(),
@@ -63,6 +64,7 @@ const { handleSubmit, setValues, values, setFieldValue } = useForm({
     jenis: "barang" as any,
     category_id: 0,
     nama: "",
+    sn: "",
     harga_pokok: undefined,
     harga_jual: 0,
     stok: undefined,
@@ -77,6 +79,7 @@ function handleProductValue() {
       distributor: props.product.distributor,
       category_id: props.product.category_id,
       nama: props.product.nama,
+      sn: props.product.sn,
       harga_pokok: props.product.harga_pokok,
       harga_jual: props.product.harga_jual,
       stok: props.product.stok,
@@ -96,6 +99,7 @@ watch(
       setFieldValue("harga_pokok", undefined);
       setFieldValue("stok", undefined);
       setFieldValue("satuan", "");
+      setFieldValue("sn", "");
     }
   },
 );
@@ -136,6 +140,15 @@ const onSubmit = handleSubmit((values) => {
           v-slot="{ componentField }"
         >
           <Input placeholder="Masukkan nama" v-bind="componentField" />
+        </FormGroup>
+
+        <FormGroup
+          name="sn"
+          label="Nomor Serial/Barcode"
+          v-slot="{ componentField }"
+          v-if="values.jenis == 'barang'"
+        >
+          <Input placeholder="Masukkan SN" v-bind="componentField" />
         </FormGroup>
 
         <FormGroup
