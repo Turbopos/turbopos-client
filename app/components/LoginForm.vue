@@ -20,7 +20,7 @@ const validationSchema = toTypedSchema(
   }),
 );
 
-const { handleSubmit } = useForm({
+const { handleSubmit, setFieldError } = useForm({
   validationSchema,
   initialValues: {
     username: "",
@@ -31,13 +31,18 @@ const { handleSubmit } = useForm({
 const { execute, result, error, loading } = useLogin();
 
 const onSubmit = handleSubmit(async (values) => {
+  setFieldError("username", "");
   await execute(values);
 
   if (!error.value) {
     auth.setUser(result.value!.user);
     useCookie("token").value = result.value!.token;
     navigateTo("/dashboard");
+
+    return;
   }
+
+  setFieldError("username", "Username atau password salah");
 });
 </script>
 
