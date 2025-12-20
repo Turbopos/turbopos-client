@@ -8,6 +8,7 @@ import { productTypeOptions } from "~/utils/constants/options/product-type";
 import SelectCategory from "~/components/form/SelectCategory.vue";
 import ButtonGroupSelect from "../form/ButtonGroupSelect.vue";
 import ComboboxDistributor from "../form/ComboboxDistributor.vue";
+import { formatCurrency } from "~/lib/currency";
 
 const props = defineProps<{
   isEdit?: boolean;
@@ -35,6 +36,7 @@ const validationSchema = toTypedSchema(
     nama: string().min(1, "Nama harus diisi"),
     sn: string().optional(),
     harga_pokok: number().optional(),
+    margin: number().optional(),
     harga_jual: number().min(0, "Harga jual harus diisi"),
     stok: number().optional(),
     satuan: string().optional(),
@@ -66,6 +68,7 @@ const { handleSubmit, setValues, values, setFieldValue } = useForm({
     nama: "",
     sn: "",
     harga_pokok: undefined,
+    margin: 0,
     harga_jual: 0,
     stok: undefined,
     satuan: "",
@@ -81,6 +84,9 @@ function handleProductValue() {
       nama: props.product.nama,
       sn: props.product.sn,
       harga_pokok: props.product.harga_pokok,
+      margin:
+        (props.product.harga_jual - props.product.harga_pokok) /
+        props.product.harga_pokok,
       harga_jual: props.product.harga_jual,
       stok: props.product.stok,
       satuan: props.product.satuan || "",
@@ -163,55 +169,104 @@ const onSubmit = handleSubmit((values) => {
           />
         </FormGroup>
 
-        <FormGroup
-          v-if="values.jenis === 'barang'"
-          name="harga_pokok"
-          label="Harga Pokok"
-          v-slot="{ componentField }"
-        >
-          <Input
-            type="number"
-            placeholder="Masukkan harga pokok"
-            v-bind="componentField"
-          />
-        </FormGroup>
+        <div class="flex items-center gap-2">
+          <div class="flex-1 min-w-0">
+            <FormGroup
+              v-if="values.jenis === 'barang'"
+              name="harga_pokok"
+              label="Harga Pokok"
+              v-slot="{ componentField }"
+            >
+              <Input
+                type="number"
+                placeholder="Masukkan harga pokok"
+                v-bind="componentField"
+                @update:model-value="
+                  (val) => {
+                    setFieldValue(
+                      'harga_jual',
+                      values.margin > 0
+                        ? (values.margin * val) / 100 + val
+                        : val,
+                    );
+                  }
+                "
+              />
+            </FormGroup>
+          </div>
 
-        <FormGroup
-          name="harga_jual"
-          label="Harga Jual"
-          v-slot="{ componentField }"
-        >
-          <Input
-            type="number"
-            placeholder="Masukkan harga jual"
-            v-bind="componentField"
-          />
-        </FormGroup>
+          <div class="w-24">
+            <FormGroup
+              name="margin"
+              label="Margin (%)"
+              v-slot="{ value, setValue }"
+            >
+              <Input
+                type="number"
+                :min="0"
+                :max="100"
+                placeholder="Masukkan margin"
+                :model-value="value"
+                @update:model-value="
+                  (val) => {
+                    setValue(val);
+                    setFieldValue(
+                      'harga_jual',
+                      val > 0
+                        ? (val * values.harga_pokok) / 100 + values.harga_pokok
+                        : values.harga_pokok,
+                    );
+                  }
+                "
+              />
+            </FormGroup>
+          </div>
 
-        <FormGroup
-          v-if="values.jenis === 'barang'"
-          name="stok"
-          label="Stok"
-          v-slot="{ componentField }"
-        >
-          <Input
-            type="number"
-            placeholder="Masukkan stok"
-            v-bind="componentField"
-          />
-        </FormGroup>
+          <div class="flex-1 min-w-0">
+            <FormGroup
+              name="harga_jual"
+              label="Harga Jual"
+              v-slot="{ componentField }"
+            >
+              <Input
+                disabled
+                placeholder="Masukkan harga jual"
+                :model-value="formatCurrency(values.harga_jual)"
+              />
+            </FormGroup>
+          </div>
+        </div>
 
-        <FormGroup
-          v-if="values.jenis === 'barang'"
-          name="satuan"
-          label="Satuan"
-          v-slot="{ componentField }"
-        >
-          <Input
-            placeholder="Masukkan satuan (pcs, kg, dll)"
-            v-bind="componentField"
-          />
-        </FormGroup>
+        <div class="flex items-center gap-2">
+          <div class="flex-1 min-w-0">
+            <FormGroup
+              v-if="values.jenis === 'barang'"
+              name="stok"
+              label="Stok"
+              v-slot="{ componentField }"
+            >
+              <Input
+                type="number"
+                placeholder="Masukkan stok"
+                v-bind="componentField"
+              />
+            </FormGroup>
+          </div>
+
+          <div class="flex-1 min-w-0">
+            <FormGroup
+              v-if="values.jenis === 'barang'"
+              name="satuan"
+              label="Satuan"
+              v-slot="{ componentField }"
+            >
+              <Input
+                placeholder="Masukkan satuan (pcs, kg, dll)"
+                v-bind="componentField"
+              />
+            </FormGroup>
+          </div>
+        </div>
       </CardContent>
       <CardFooter class="flex items-center gap-2">
         <Button type="button" @click="router.back" variant="outline">
