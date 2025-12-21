@@ -13,8 +13,10 @@ const props = defineProps<Props>();
 
 <template>
   <Field v-bind="props" v-slot="field">
-    <div class="space-y-2 truncate">
-      <FieldLabel v-if="label" class="truncate">{{ label }}</FieldLabel>
+    <div class="space-y-2">
+      <FieldLabel v-if="label" class="truncate max-w-full">{{
+        label
+      }}</FieldLabel>
 
       <slot v-bind="field"></slot>
 
