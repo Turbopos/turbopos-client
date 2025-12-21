@@ -84,9 +84,10 @@ function handleProductValue() {
       nama: props.product.nama,
       sn: props.product.sn,
       harga_pokok: props.product.harga_pokok,
-      margin:
-        (props.product.harga_jual - props.product.harga_pokok) /
-        props.product.harga_pokok,
+      margin: props.product.harga_pokok
+        ? (props.product.harga_jual - props.product.harga_pokok) /
+          props.product.harga_pokok
+        : 0,
       harga_jual: props.product.harga_jual,
       stok: props.product.stok,
       satuan: props.product.satuan || "",
@@ -185,9 +186,10 @@ const onSubmit = handleSubmit((values) => {
                   (val) => {
                     setFieldValue(
                       'harga_jual',
-                      values.margin > 0
-                        ? (values.margin * val) / 100 + val
-                        : val,
+                      values.margin && values.margin > 0
+                        ? (values.margin * (val as number)) / 100 +
+                            (val as number)
+                        : (val as number),
                     );
                   }
                 "
@@ -212,8 +214,9 @@ const onSubmit = handleSubmit((values) => {
                     setValue(val);
                     setFieldValue(
                       'harga_jual',
-                      val > 0
-                        ? (val * values.harga_pokok) / 100 + values.harga_pokok
+                      (val as number) > 0
+                        ? ((val as number) * (values?.harga_pokok || 0)) / 100 +
+                            (values.harga_pokok || 0)
                         : values.harga_pokok,
                     );
                   }
@@ -229,7 +232,7 @@ const onSubmit = handleSubmit((values) => {
               v-slot="{ componentField }"
             >
               <Input
-                disabled
+                :disabled="values.jenis == 'barang'"
                 placeholder="Masukkan harga jual"
                 :model-value="formatCurrency(values.harga_jual)"
               />
