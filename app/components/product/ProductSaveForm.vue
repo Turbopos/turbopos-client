@@ -233,8 +233,9 @@ const onSubmit = handleSubmit((values) => {
             >
               <Input
                 :disabled="values.jenis == 'barang'"
+                type="number"
                 placeholder="Masukkan harga jual"
-                :model-value="formatCurrency(values.harga_jual)"
+                v-bind="componentField"
               />
             </FormGroup>
           </div>
