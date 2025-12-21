@@ -42,6 +42,15 @@ html:has(.print-element) {
     text-align: center;
     font-size: 18px;
     text-transform: uppercase;
+    position: relative;
+
+    .title-image {
+      height: 50px;
+      width: 50px;
+      position: absolute;
+      top: 0;
+      left: 50px;
+    }
 
     .subtitle,
     .subtitle * {

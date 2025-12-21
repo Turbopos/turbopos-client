@@ -131,7 +131,7 @@ function confirmOpname() {
           <CardContent>
             <div class="flex items-start justify-between gap-3">
               <div
-                class="flex-1 space-y-3 grid md:grid-cols-4 grid-cols-2 gap-3"
+                class="flex-1 space-y-3 grid md:grid-cols-6 grid-cols-2 gap-3"
               >
                 <div class="col-span-2">
                   <FormGroup
@@ -176,7 +176,7 @@ function confirmOpname() {
                   />
                 </FormGroup>
 
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2 whitespace-nowrap">
                   <div class="flex-1 min-w-0">
                     <FormGroup
                       :name="`items[${i}].jumlah_awal`"
@@ -215,22 +215,20 @@ function confirmOpname() {
                   />
                 </FormGroup>
 
-                <div class="col-span-3">
-                  <FormGroup
-                    :name="`items[${i}].total_selisih`"
-                    label="Total Selisih"
-                  >
-                    <Input
-                      disabled
-                      :model-value="
-                        formatCurrency(
-                          item.harga_pokok *
-                            (item.jumlah_opname - item.jumlah_awal),
-                        )
-                      "
-                    />
-                  </FormGroup>
-                </div>
+                <FormGroup
+                  :name="`items[${i}].total_selisih`"
+                  label="Total Selisih"
+                >
+                  <Input
+                    disabled
+                    :model-value="
+                      formatCurrency(
+                        item.harga_pokok *
+                          (item.jumlah_opname - item.jumlah_awal),
+                      )
+                    "
+                  />
+                </FormGroup>
               </div>
 
               <div

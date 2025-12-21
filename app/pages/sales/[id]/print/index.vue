@@ -51,6 +51,7 @@ definePageMeta({
 <template>
   <div class="print-element a4" ref="element">
     <div class="title">
+      <img src="/favicon.ico" alt="" class="title-image" />
       NOTA PENJUALAN
       <div class="subtitle">
         <div>{{ settingStore.setting?.nama }}</div>
@@ -149,5 +150,9 @@ definePageMeta({
         </tr>
       </tbody>
     </table>
+
+    <div style="margin-top: 10px; display: block">
+      Operator: {{ result?.sales_transaction.user?.nama }}
+    </div>
   </div>
 </template>
