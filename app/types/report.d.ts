@@ -20,6 +20,29 @@ export interface PurchaseOrderReportRequest {
   page?: number;
 }
 
+export interface OpnameReportItem {
+  nama_barang: string;
+  jumlah_awal: number;
+  jumlah_opname: number;
+  selisih: number;
+  satuan: string;
+  harga_pokok: number;
+  total: number;
+}
+
+export interface OpnameReportResponse {
+  opname_reports: OpnameReportItem[];
+  total: number;
+  per_page: number;
+}
+
+export interface OpnameReportRequest {
+  month?: string;
+  user_id?: number;
+  limit?: number;
+  page?: number;
+}
+
 export interface SalesTransactionReportItem {
   nama_barang: string;
   jumlah: number;

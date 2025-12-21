@@ -162,10 +162,12 @@ const { result, loading, error, refresh } = useGetSalesTransaction(id);
       <!-- Items Table -->
       <Card>
         <CardHeader>
-          <CardTitle>Item yang Dijual</CardTitle>
-          <CardDescription>
-            Daftar produk dalam transaksi penjualan ini
-          </CardDescription>
+          <div>
+            <CardTitle>Item yang Dijual</CardTitle>
+            <CardDescription>
+              Daftar produk dalam transaksi penjualan ini
+            </CardDescription>
+          </div>
         </CardHeader>
         <CardContent>
           <Table>

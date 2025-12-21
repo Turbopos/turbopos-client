@@ -115,10 +115,12 @@ const { result, loading, error, refresh } = useGetPurchaseOrder(id);
       <!-- Items Table -->
       <Card>
         <CardHeader>
-          <CardTitle>Item yang Dibeli</CardTitle>
-          <CardDescription>
-            Daftar produk dalam purchase order ini
-          </CardDescription>
+          <div>
+            <CardTitle>Item yang Dibeli</CardTitle>
+            <CardDescription>
+              Daftar produk dalam purchase order ini
+            </CardDescription>
+          </div>
         </CardHeader>
         <CardContent>
           <Table>

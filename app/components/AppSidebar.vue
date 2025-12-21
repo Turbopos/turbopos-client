@@ -119,6 +119,11 @@ const data = computed(() => {
           icon: BanknoteArrowUp,
         },
         {
+          title: "Laporan Opname",
+          url: "/opname-report",
+          icon: HandCoins,
+        },
+        {
           title: "Laporan Rugi Laba",
           url: "/profit-loss-report",
           icon: BadgeDollarSign,

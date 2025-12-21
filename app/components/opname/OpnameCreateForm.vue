@@ -271,22 +271,22 @@ function confirmOpname() {
               <TableHeader>
                 <TableRow>
                   <TableHead>Produk</TableHead>
-                  <TableHead>Harga</TableHead>
                   <TableHead>Jml Awal</TableHead>
                   <TableHead>Jml Opname</TableHead>
                   <TableHead>Selisih</TableHead>
+                  <TableHead>Harga Pokok</TableHead>
                   <TableHead>Total</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 <TableRow v-for="(item, i) in values.items" :key="i">
                   <TableCell>{{ item.product?.nama }}</TableCell>
-                  <TableCell>{{ formatCurrency(item.harga_pokok) }}</TableCell>
                   <TableCell>{{ item.jumlah_awal }}</TableCell>
                   <TableCell>{{ item.jumlah_opname }}</TableCell>
                   <TableCell>
                     {{ item.jumlah_opname - item.jumlah_awal }}
                   </TableCell>
+                  <TableCell>{{ formatCurrency(item.harga_pokok) }}</TableCell>
                   <TableCell>
                     {{
                       formatCurrency(

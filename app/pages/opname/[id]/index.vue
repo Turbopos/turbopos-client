@@ -93,20 +93,22 @@ const { result, loading, error, refresh } = useGetOpname(id);
       <!-- Items Table -->
       <Card>
         <CardHeader>
-          <CardTitle>Item yang Dibeli</CardTitle>
-          <CardDescription>
-            Daftar produk dalam purchase order ini
-          </CardDescription>
+          <div>
+            <CardTitle>Item yang Diopname</CardTitle>
+            <CardDescription>
+              Daftar produk data stok opname ini
+            </CardDescription>
+          </div>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Produk</TableHead>
-                <TableHead class="text-right">Harga Pokok</TableHead>
                 <TableHead class="text-right">Jumlah Awal</TableHead>
                 <TableHead class="text-right">Jumlah Opname</TableHead>
                 <TableHead class="text-right">Selisih</TableHead>
+                <TableHead class="text-right">Harga Pokok</TableHead>
                 <TableHead class="text-right">Total</TableHead>
               </TableRow>
             </TableHeader>
@@ -115,14 +117,14 @@ const { result, loading, error, refresh } = useGetOpname(id);
                 <TableCell class="font-medium">
                   {{ item.product.nama }}
                 </TableCell>
-                <TableCell class="text-right">
-                  {{ formatCurrency(item.harga_pokok) }}
-                </TableCell>
                 <TableCell class="text-right">{{ item.jumlah_awal }}</TableCell>
                 <TableCell class="text-right">{{
                   item.jumlah_opname
                 }}</TableCell>
                 <TableCell class="text-right">{{ item.selisih }}</TableCell>
+                <TableCell class="text-right">
+                  {{ formatCurrency(item.harga_pokok) }}
+                </TableCell>
                 <TableCell class="text-right font-semibold">
                   {{ formatCurrency(item.total_selisih) }}
                 </TableCell>

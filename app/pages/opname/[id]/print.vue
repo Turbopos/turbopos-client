@@ -83,20 +83,20 @@ definePageMeta({
       <thead>
         <tr>
           <th>Nama Barang</th>
-          <th>Harga Pokok</th>
           <th>Jml Awal</th>
           <th>Jml Opname</th>
           <th>Selisih</th>
+          <th>Harga Pokok</th>
           <th>Total Selisih</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in result?.opname.details" :key="item.id">
           <td>{{ item.product.nama }}</td>
-          <td align="right">{{ formatCurrency(item.harga_pokok) }}</td>
           <td align="right">{{ item.jumlah_awal }}</td>
           <td align="right">{{ item.jumlah_opname }}</td>
           <td align="right">{{ item.selisih }}</td>
+          <td align="right">{{ formatCurrency(item.harga_pokok) }}</td>
           <td align="right">{{ formatCurrency(item.total_selisih) }}</td>
         </tr>
         <tr>
