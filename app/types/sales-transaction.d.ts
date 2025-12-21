@@ -19,6 +19,7 @@ export interface SalesTransactionDetail {
   product: {
     id: number;
     nama: string;
+    satuan?: string;
     diskon?: number;
   };
 }

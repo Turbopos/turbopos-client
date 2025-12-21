@@ -10,6 +10,7 @@ import { useVModel } from "@vueuse/core";
 const props = defineProps<{
   modelValue?: Product;
   distributorId?: number;
+  jenis?: "barang" | "jasa";
 }>();
 
 const emits = defineEmits<{
@@ -19,6 +20,7 @@ const emits = defineEmits<{
 const { result, loading, refresh } = useGetProducts({
   limit: 500,
   distributor_id: props.distributorId,
+  jenis: props.jenis,
 });
 
 const open = ref(false);

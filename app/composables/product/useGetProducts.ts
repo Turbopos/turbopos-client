@@ -9,6 +9,7 @@ import { http } from "~/lib/http";
 interface Props {
   distributor_id?: number;
   limit?: number;
+  jenis?: "barang" | "jasa";
 }
 
 export default function (props?: Props) {
@@ -22,7 +23,7 @@ export default function (props?: Props) {
     search: "",
     page: 1,
     distributor_id: props?.distributor_id,
-    jenis: "" as any,
+    jenis: props?.jenis as any,
     order_by: sort.value.field,
     sort: sort.value.order,
   });
