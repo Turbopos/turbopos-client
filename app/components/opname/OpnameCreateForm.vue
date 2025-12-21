@@ -186,9 +186,9 @@ function confirmOpname() {
                       <Input
                         type="number"
                         min="0"
+                        disabled
                         v-bind="componentField"
                         placeholder="Jumlah Awal"
-                        :class="{ 'rounded-r-none': item.product?.satuan }"
                       />
                     </FormGroup>
                   </div>
@@ -203,7 +203,6 @@ function confirmOpname() {
                         min="0"
                         v-bind="componentField"
                         placeholder="Jumlah Opname"
-                        :class="{ 'rounded-r-none': item.product?.satuan }"
                       />
                     </FormGroup>
                   </div>
